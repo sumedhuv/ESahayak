@@ -1,4 +1,6 @@
 import React, {useState} from 'react';
+import axios from './axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   SafeAreaView,
   ScrollView,
@@ -11,73 +13,75 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-const App = () => {
-  const [search, setSearch] = useState('');
 
+const App = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    const vals = {seller_email: email, seller_password: password};
+    console.log(vals);
+    await axios
+      .post('/buyer/', vals)
+      .then(res => {
+        console.log('response', res.data);
+        const jvalue = JSON.stringify(res.data);
+        AsyncStorage.setItem('token', jvalue);
+        const getData = async () => {
+          try {
+            const value = await AsyncStorage.getItem('token');
+            if (value !== null) {
+              // value previously stored
+              console.log(value);
+            }
+          } catch (e) {
+            // error reading value
+          }
+        };
+        getData();
+        //window.location.href = "http://localhost:3000/seller/allpdts";
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
   return (
     <View style={styles.background}>
+      <View style={styles.cornerbg}>
+        <Image
+          source={require('./corner.png')}
+          style={{height: 120, width: 150}}
+        />
+      </View>
       <View style={styles.centre}>
         <View style={styles.inputView}>
-          <MaterialIcons
-            name={'search'}
-            size={30}
-            color="black"
-            style={{backgroundColor: '#FFFFFF', marginLeft: 30}}
-          />
           <TextInput
             style={styles.TextInput}
-            placeholder="what are you looking for?"
+            placeholder="ENTER YOUR EMAIL"
             placeholderTextColor="#003f5c"
-            onChangeText={search => setSearch(search)}
+            onChangeText={email => setEmail(email)}
           />
         </View>
-        <View
-          style={{
-            backgroundColor: '#352F98',
-            width: 140,
-            height: 50,
-            borderRadius: 10,
-          }}>
-          <Text
-            style={{
-              color: '#FFFFFF',
-              marginLeft: 60,
-              fontSize: 18,
-              marginTop: 10,
-              fontWeight: 'bold',
-            }}>
-            GRAINS
-          </Text>
-        </View>
-      </View>
 
-      <View
-        style={{
-          backgroundColor: '#9898DE',
-          borderRadius: 10,
-          width: '95%',
-          margin: 10,
-          flexDirection: 'row',
-        }}>
-        <View style={{height: 150, width: 250, marginTop: 10, marginLeft: 10}}>
-          <Image
-            source={require('./wheat.png')}
-            style={{
-              width: null,
-              resizeMode: 'contain',
-              height: 130,
-              borderRadius: 10,
-            }}
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.TextInput}
+            placeholder="PASSWORD"
+            placeholderTextColor="#003f5c"
+            secureTextEntry={true}
+            onChangeText={password => setPassword(password)}
           />
         </View>
-        <View style={{marginRight: 200}}>
-          <Text style={{fontWeight: 'bold', fontSize: 22, marginTop: 10}}>
-            WHEAT
-          </Text>
-          <Text>Remaining Stock: 10 kg</Text>
-          <Text>Sold Today: 20 kg</Text>
-          <Text>Profit: 1400 rs</Text>
+
+        <TouchableOpacity style={styles.loginBtn} onPress={handleSubmit}>
+          <Text style={{fontWeight: 'bold', color: '#FFFFFF'}}>LOGIN</Text>
+        </TouchableOpacity>
+        <View style={{height: 350, width: 350, marginTop: 30}}>
+          <Image
+            source={require('./login.png')}
+            style={{width: null, resizeMode: 'contain', height: 220}}
+          />
         </View>
       </View>
     </View>
@@ -97,15 +101,13 @@ const styles = StyleSheet.create({
   centre: {
     alignItems: 'center',
 
-    marginTop: 20,
-    marginLeft: 10,
+    marginTop: 100,
   },
   inputView: {
     backgroundColor: '#FFFFFF',
-    flexDirection: 'row',
     borderRadius: 30,
-    width: '80%',
-    height: 40,
+    width: '70%',
+    height: 45,
     marginBottom: 20,
     alignItems: 'center',
   },
@@ -114,8 +116,8 @@ const styles = StyleSheet.create({
     height: 50,
     flex: 1,
     padding: 10,
-    marginLeft: 10,
-    width: '80%',
+    marginLeft: 20,
+    width: '70%',
   },
   loginBtn: {
     width: '70%',

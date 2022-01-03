@@ -12,7 +12,6 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import Welcome from './screens/welcome';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -22,7 +21,7 @@ const Login = () => {
     <View style={styles.background}>
       <View style={styles.cornerbg}>
         <Image
-          source={require('./corner.png')}
+          source={require('../corner.png')}
           style={{height: 120, width: 150}}
         />
       </View>
