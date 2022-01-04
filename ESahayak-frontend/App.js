@@ -21,6 +21,8 @@ import Home from './screens/home';
 import Grains from './screens/grains';
 import Profile from './screens/profile';
 import Voice from './screens/voice';
+import Sales from './screens/sales';
+import Settings from './screens/settings';
 
 const Stack = createNativeStackNavigator();
 
@@ -38,9 +40,11 @@ const App = () => {
       <Drawer.Navigator
         initialRouteName="Profile"
         screenOptions={screenOptionStyle}>
+        <Drawer.Screen name="Profile" component={Profile} />
         <Drawer.Screen name="Voice" component={Voice} />
         <Drawer.Screen name="Grains" component={Grains} />
-        <Drawer.Screen name="Profile" component={Profile} />
+        <Drawer.Screen name="Sales" component={Sales} />
+        <Drawer.Screen name="Settings" component={Settings} />
       </Drawer.Navigator>
     );
   };
@@ -48,10 +52,16 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
+          name="Welcome"
+          component={Welcome}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
           name="Home"
           component={Home}
           options={{headerShown: false}}
         />
+
         <Stack.Screen
           name="Login"
           component={Login}

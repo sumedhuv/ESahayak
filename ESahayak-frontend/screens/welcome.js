@@ -9,9 +9,10 @@ import {
   useColorScheme,
   View,
   Image,
+  TouchableOpacity,
 } from 'react-native';
 
-const Welcome = () => {
+const Welcome = ({navigation}) => {
   return (
     <View style={styles.background}>
       <View style={styles.cornerbg}>
@@ -44,6 +45,13 @@ const Welcome = () => {
           One stop solution to all your business problems with the help of a
           voice assistant
         </Text>
+        <TouchableOpacity
+          style={styles.loginBtn}
+          onPress={navigation.navigate('Home')}>
+          <Text style={{fontWeight: 'bold', color: '#FFFFFF'}}>
+            GET STARTED
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -63,6 +71,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
 
     marginTop: 100,
+  },
+  loginBtn: {
+    width: '70%',
+    borderRadius: 25,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
+    backgroundColor: '#7D7AFF',
   },
 });
 

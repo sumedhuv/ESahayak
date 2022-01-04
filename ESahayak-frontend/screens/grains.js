@@ -23,7 +23,7 @@ const Grains = () => {
             name={'search'}
             size={30}
             color="black"
-            style={{backgroundColor: '#FFFFFF', marginLeft: 30}}
+            style={{backgroundColor: '#FFFFFF', marginLeft: 20}}
           />
           <TextInput
             style={styles.TextInput}
@@ -32,24 +32,27 @@ const Grains = () => {
             onChangeText={search => setSearch(search)}
           />
         </View>
-        <View
-          style={{
-            backgroundColor: '#352F98',
-            width: 140,
-            height: 50,
-            borderRadius: 10,
-          }}>
-          <Text
+        <TouchableOpacity>
+          <View
             style={{
-              color: '#FFFFFF',
-              marginLeft: 60,
-              fontSize: 18,
-              marginTop: 10,
-              fontWeight: 'bold',
+              backgroundColor: '#352F98',
+              width: 140,
+              height: 50,
+              borderRadius: 10,
+              marginLeft: -180,
             }}>
-            GRAINS
-          </Text>
-        </View>
+            <Text
+              style={{
+                color: '#FFFFFF',
+                marginLeft: 40,
+                fontSize: 18,
+                marginTop: 10,
+                fontWeight: 'bold',
+              }}>
+              GRAINS
+            </Text>
+          </View>
+        </TouchableOpacity>
       </View>
 
       <View
@@ -60,7 +63,13 @@ const Grains = () => {
           margin: 10,
           flexDirection: 'row',
         }}>
-        <View style={{height: 150, width: 250, marginTop: 10, marginLeft: 10}}>
+        <View
+          style={{
+            height: 150,
+            width: 250,
+            marginTop: 10,
+            marginLeft: -30,
+          }}>
           <Image
             source={require('../wheat.png')}
             style={{
@@ -71,7 +80,7 @@ const Grains = () => {
             }}
           />
         </View>
-        <View>
+        <View style={{marginLeft: -20}}>
           <Text style={{fontWeight: 'bold', fontSize: 22, marginTop: 10}}>
             WHEAT
           </Text>
@@ -104,8 +113,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     flexDirection: 'row',
     borderRadius: 30,
-    width: '80%',
-    height: 40,
+    width: '100%',
+    height: 50,
     marginBottom: 20,
     alignItems: 'center',
   },
