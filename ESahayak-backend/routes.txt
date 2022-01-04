@@ -1,0 +1,144 @@
+User : 
+register : 
+1. http://localhost:5000/register -- post request
+{
+    "owner_name" : "Sunil",
+    "owner_email" : "sk1@gmail.com",
+    "owner_phone" : 7358577964,
+    "owner_password" : "Sunil",
+    "shop_address" : "202/A Kashmiri Apt ramdas nagar vasai(E)"
+    "owner_upi" :2134234,
+    "owner_image" : upload image
+}
+
+2. http://localhost:5000/allusers -- get request all user
+3. http://localhost:5000/:id -- get request for only one user
+4. http://localhost:5000/:id/update -- put request to update a user
+{
+    "owner_image" : upload new image,
+    "owner_email" : sk@gmail.com"
+}
+
+
+Login : 
+1. http://localhost:5000/ -- post request for login
+{
+    "owner_email" : "sk1@gmail.com",
+    "owner_password" : "Sunil"
+}
+
+Product : which owner currently has
+1. http://localhost:5000/product/:o_id/addpdt -- post request to add product
+{
+    "pdt_name" : "wheat",
+    "pdt_remaining_stock" : 12,
+    "pdt_bought_price" : 15,
+    "pdt_current_price" : 50
+    "pdt_image" : upload image
+}
+2. http://localhost:5000/product/:o_id/all  -- to get all available products
+3. http://localhost:5000/product/:o_id/:id  -- to get a product
+4. http://localhost:5000/product/:o_id/:id/update -- put request to update a product
+{
+    "pdt_name" : "rice"
+}
+
+Staff : which owner has
+1. http://localhost:5000/staff/:o_id/addstaff --- post request to add staff
+{
+    "staff_name": "sunil",
+    "staff_phone": 147852369,
+    "staff_salary": 12000,
+    "staff_last_salary_paid": 5
+    "staff_upi" : "qw@upi.com"
+    "staff_image" : upload image
+}
+2. http://localhost:5000/staff/:o_id/allstaff  -- to get all staff
+3. http://localhost:5000/staff/:o_id/:id  -- to get a staff
+4. http://localhost:5000/staff/:o_id/:id/update -- put request to update
+{
+    "staff_name" : "sk"
+}
+
+Buypdts : to get all products which are availanle to buy or order more for owner.
+1. http://localhost:5000/buypdts/all -- get request 
+
+
+SELLER : who wants to sell their items which can be seen by all owners.
+Register : 
+1. http://localhost:5000/buyer/register -- post request to add a seller
+{
+    "seller_name" : "Sunil",
+    "seller_email" : "sk1@gmil.com",
+    "seller_phone" : 76,
+    "seller_password" : "Sunil",
+    "shop_address" : "202/A Kashmiri Apt ramdas nagar vasai(E)",
+    "seller_upi" : sk@upi.com"
+    "seller_image" : upload image
+}
+2. http://localhost:5000/buyer/allusers -- get request to get all sellers
+3. http://localhost:5000/buyer/:id -- get request to get a seller
+4. http://localhost:5000/buyer/:id/update -- to update a selle
+{
+    "seller_name" : "Sk",
+    "seller_email" : "sk@gmil.com"
+}
+
+get email : 
+1. http://localhost:5000/buyer/one --- post request to get id
+{
+    "seller_email" : "sk@gmil.com"
+}
+
+
+Login : 
+1. http://localhost:5000/buyer/  -- post request for login of seller
+{
+    "seller_email" : "sk1@gmil.com",
+    "seller_password" : "Sunil"
+}
+
+
+Addpdts : if seller wants to add product or update an existing
+1. http://localhost:5000/buyer/:s_id/addpdt  -- post request to add new pdt
+{
+    "buy_name" : "bajra",
+    "buy_price" : "25",
+    "buy_quantity" : 256
+    "buy_image" : upload image
+}
+
+2. http://localhost:5000/buyer/:s_id/all  -- to get all pdts add by a seller
+3. http://localhost:5000/buyer/:s_id/:id -- to get a pdt
+4. http://localhost:5000/buyer/:s_id/:id/update -- put request to update
+{
+    "buy_price" : "35",
+}
+
+
+Send Email : to seller and owner about transaction
+
+1. http://localhost:5000/sendmail  -- post request
+{
+    {
+    "email1" : "sunilkumhar1@gmail.com",
+    "email2" : "skumhar2002@gmail.com",
+    "pdt_price" : 20,
+    "pdt_qunatity" : 5,
+    "pdt_name" : "rice"
+    "pdt_image" : upload image of pdt
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
