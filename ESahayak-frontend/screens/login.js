@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import axios from './axios';
+import axios from '../axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   SafeAreaView,
@@ -14,7 +14,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-const Login = () => {
+const Login = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -34,9 +34,11 @@ const Login = () => {
             if (value !== null) {
               // value previously stored
               console.log(value);
+              navigation.navigate('mainTab');
             }
           } catch (e) {
             // error reading value
+            console.log(e);
           }
         };
         getData();

@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+
 import {
   SafeAreaView,
   ScrollView,
@@ -11,42 +12,46 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-const Voice = () => {
+import {NavigationActions} from 'react-navigation';
+
+const Home = ({navigation}) => {
+  const handleShop = async e => {
+    navigation.navigate('Login');
+    //window.location.href = "http://localhost:3000/owner";
+  };
+  const handleSeller = async e => {
+    navigation.navigate('Login');
+    //window.location.href = "http://localhost:3000/seller";
+  };
   return (
     <View style={styles.background}>
+      <View style={styles.cornerbg}>
+        <Image
+          source={require('../corner.png')}
+          style={{height: 120, width: 150}}
+        />
+      </View>
       <View style={styles.centre}>
         <Text
           style={{
             fontWeight: 'bold',
-            fontSize: 26,
+            fontSize: 22,
             color: 'black',
-            marginBottom: 10,
+            marginTop: 20,
+            marginBottom: 20,
           }}>
-          TAP TO SPEAK
+          LET'S GET YOU ON BOARD
         </Text>
-        <TouchableOpacity>
-          <View
-            style={{
-              height: 200,
-              width: 200,
-              marginTop: 30,
-              backgroundColor: '#9898DE',
-              borderRadius: 200,
-            }}>
-            <Image
-              source={require('../mic.png')}
-              style={{
-                width: null,
-                resizeMode: 'contain',
-                height: 100,
-                marginTop: 50,
-              }}
-            />
-          </View>
+
+        <TouchableOpacity style={styles.loginBtn} onPress={handleSeller}>
+          <Text style={{fontWeight: 'bold', color: '#FFFFFF'}}>Seller</Text>
         </TouchableOpacity>
-        <View style={{height: 300, width: 300, marginTop: 30}}>
+        <TouchableOpacity style={styles.loginBtn} onPress={handleShop}>
+          <Text style={{fontWeight: 'bold', color: '#FFFFFF'}}>Shop Owner</Text>
+        </TouchableOpacity>
+        <View style={{height: 350, width: 350, marginTop: 30}}>
           <Image
-            source={require('../home.png')}
+            source={require('../login.png')}
             style={{width: null, resizeMode: 'contain', height: 220}}
           />
         </View>
@@ -97,4 +102,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Voice;
+export default Home;

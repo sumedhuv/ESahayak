@@ -23,15 +23,9 @@ const Register = () => {
   const [shop_address, setShopAddress] = useState('');
   const [seller_image, setSellerImage] = useState('');
   const [seller_upi, setSellerUpi] = useState('');
-  const [vals, setVal] = useState(initVals);
-  const [errmsg, seterrmsg] = useState('');
-  const handleChange = e => {
-    e.preventDefault();
 
-    const {name, value} = e.target;
-    setVal({...vals, [name]: value});
-    console.log(vals);
-  };
+  const [errmsg, seterrmsg] = useState('');
+
   // const handleChangeImage = (e) => {
   //   console.log(e.target.files[0]);
   //   setseller_image(e.target.files[0]);
@@ -58,7 +52,7 @@ const Register = () => {
         console.log(res);
         //localStorage.setItem("token", res.headers["x-auth-token"]);
         AsyncStorage.setItem('token', res.headers['x-auth-token']);
-        window.location.href = 'http://localhost:3000/seller/allpdts';
+        //window.location.href = 'http://localhost:3000/seller/allpdts';
       })
       .catch(err => {
         console.log(err);
@@ -108,7 +102,7 @@ const Register = () => {
       <View style={styles.background}>
         <View style={styles.cornerbg}>
           <Image
-            source={require('./corner.png')}
+            source={require('../corner.png')}
             style={{height: 120, width: 150}}
           />
         </View>
