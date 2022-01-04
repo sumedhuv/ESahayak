@@ -12,6 +12,8 @@ target 'Esahayak' do
     :hermes_enabled => false
   )
 
+  pod 'react-native-voice', :path => '../node_modules/react-native-voice'
+
   target 'EsahayakTests' do
     inherit! :complete
     # Pods for testing
