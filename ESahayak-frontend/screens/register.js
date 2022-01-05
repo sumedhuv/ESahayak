@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import axios from './axios';
+import axios from '../axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   SafeAreaView,
@@ -15,7 +15,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
-const Register = () => {
+const Register = ({navigation}) => {
   const [seller_name, setSellerName] = useState('');
   const [seller_email, setSellerEmail] = useState('');
   const [seller_password, setSellerPassword] = useState('');
@@ -49,10 +49,12 @@ const Register = () => {
     await axios
       .post('/buyer/register', fd)
       .then(res => {
+        console.log('here')
         console.log(res);
         //localStorage.setItem("token", res.headers["x-auth-token"]);
         AsyncStorage.setItem('token', res.headers['x-auth-token']);
         //window.location.href = 'http://localhost:3000/seller/allpdts';
+        navigation.navigate('maintab')
       })
       .catch(err => {
         console.log(err);
@@ -212,7 +214,7 @@ const Register = () => {
             <Text style={{fontWeight: 'bold', color: 'grey', marginTop: 20}}>
               ALREADY HAVE AN ACCOUNT?{' '}
             </Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={()=>navigation.navigate('Login')}>
               <Text
                 style={{fontWeight: 'bold', color: '#7D7AFF', marginTop: 20}}>
                 SIGN IN

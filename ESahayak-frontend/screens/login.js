@@ -61,6 +61,7 @@ const Login = ({navigation}) => {
           <TextInput
             style={styles.TextInput}
             placeholder="ENTER YOUR EMAIL"
+            color="black"
             placeholderTextColor="#003f5c"
             onChangeText={email => setEmail(email)}
           />
@@ -71,6 +72,7 @@ const Login = ({navigation}) => {
             style={styles.TextInput}
             placeholder="PASSWORD"
             placeholderTextColor="#003f5c"
+            color="black"
             secureTextEntry={true}
             onChangeText={password => setPassword(password)}
           />
@@ -79,6 +81,17 @@ const Login = ({navigation}) => {
         <TouchableOpacity style={styles.loginBtn} onPress={handleSubmit}>
           <Text style={{fontWeight: 'bold', color: '#FFFFFF'}}>LOGIN</Text>
         </TouchableOpacity>
+        <View style={{flexDirection: 'row'}}>
+            <Text style={{fontWeight: 'bold', color: 'grey', marginTop: 20}}>
+              DONT HAVE AN ACCOUNT?{' '}
+            </Text>
+            <TouchableOpacity onPress={()=>navigation.navigate('Register')}>
+              <Text
+                style={{fontWeight: 'bold', color: '#7D7AFF', marginTop: 20}}>
+                SIGN UP
+              </Text>
+            </TouchableOpacity>
+          </View>
         <View style={{height: 350, width: 350, marginTop: 30}}>
           <Image
             source={require('../login.png')}

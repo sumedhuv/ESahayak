@@ -43,10 +43,10 @@ const Home = ({navigation}) => {
           LET'S GET YOU ON BOARD
         </Text>
 
-        <TouchableOpacity style={styles.loginBtn} onPress={handleSeller}>
+        <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('Register')}>
           <Text style={{fontWeight: 'bold', color: '#FFFFFF'}}>Seller</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.loginBtn} onPress={handleShop}>
+        <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('Register')}>
           <Text style={{fontWeight: 'bold', color: '#FFFFFF'}}>Shop Owner</Text>
         </TouchableOpacity>
         <View style={{height: 350, width: 350, marginTop: 30}}>

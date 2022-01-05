@@ -47,7 +47,7 @@ const Welcome = ({navigation}) => {
         </Text>
         <TouchableOpacity
           style={styles.loginBtn}
-          onPress={navigation.navigate('Home')}>
+          onPress={()=>navigation.navigate('Home')}>
           <Text style={{fontWeight: 'bold', color: '#FFFFFF'}}>
             GET STARTED
           </Text>
