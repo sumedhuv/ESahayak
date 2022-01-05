@@ -15,7 +15,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
-const Register = ({navigation}) => {
+const SellerRegister = ({navigation}) => {
   const [seller_name, setSellerName] = useState('');
   const [seller_email, setSellerEmail] = useState('');
   const [seller_password, setSellerPassword] = useState('');
@@ -54,7 +54,7 @@ const Register = ({navigation}) => {
         //localStorage.setItem("token", res.headers["x-auth-token"]);
         AsyncStorage.setItem('token', res.headers['x-auth-token']);
         //window.location.href = 'http://localhost:3000/seller/allpdts';
-        navigation.navigate('maintab')
+        navigation.navigate('mainTabSeller')
       })
       .catch(err => {
         console.log(err);
@@ -214,7 +214,7 @@ const Register = ({navigation}) => {
             <Text style={{fontWeight: 'bold', color: 'grey', marginTop: 20}}>
               ALREADY HAVE AN ACCOUNT?{' '}
             </Text>
-            <TouchableOpacity onPress={()=>navigation.navigate('Login')}>
+            <TouchableOpacity onPress={()=>navigation.navigate('SellerLogin')}>
               <Text
                 style={{fontWeight: 'bold', color: '#7D7AFF', marginTop: 20}}>
                 SIGN IN
@@ -279,4 +279,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Register;
+export default SellerRegister;

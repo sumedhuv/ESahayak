@@ -12,7 +12,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-const Grains = () => {
+const Product = () => {
   const [search, setSearch] = useState('');
 
   return (
@@ -137,4 +137,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Grains;
+export default Product;
