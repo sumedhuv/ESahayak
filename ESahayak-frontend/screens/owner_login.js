@@ -14,16 +14,16 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-const Login = ({navigation}) => {
+const OwnerLogin = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const vals = {seller_email: email, seller_password: password};
+    const vals = {owner_email: email, owner_password: password};
     console.log(vals);
     await axios
-      .post('/buyer/', vals)
+      .post('/', vals)
       .then(res => {
         console.log('response', res.data);
         const jvalue = JSON.stringify(res.data);
@@ -34,7 +34,7 @@ const Login = ({navigation}) => {
             if (value !== null) {
               // value previously stored
               console.log(value);
-              navigation.navigate('mainTab');
+              navigation.navigate('mainTabOwner');
             }
           } catch (e) {
             // error reading value
@@ -42,7 +42,7 @@ const Login = ({navigation}) => {
           }
         };
         getData();
-        //window.location.href = "http://localhost:3000/seller/allpdts";
+        //window.location.href = "http://localhost:3000/owner/allpdts";
       })
       .catch(err => {
         console.log(err);
@@ -85,7 +85,7 @@ const Login = ({navigation}) => {
             <Text style={{fontWeight: 'bold', color: 'grey', marginTop: 20}}>
               DONT HAVE AN ACCOUNT?{' '}
             </Text>
-            <TouchableOpacity onPress={()=>navigation.navigate('Register')}>
+            <TouchableOpacity onPress={()=>navigation.navigate('OwnerRegister')}>
               <Text
                 style={{fontWeight: 'bold', color: '#7D7AFF', marginTop: 20}}>
                 SIGN UP
@@ -145,4 +145,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Login;
+export default OwnerLogin;
