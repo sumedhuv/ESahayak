@@ -23,13 +23,16 @@ import OwnerRegister from './screens/owner_register';
 import Welcome from './screens/welcome';
 import Home from './screens/home';
 import Products from './screens/product';
-import Profile from './screens/profile';
+import ProfileOwner from './screens/profileOwner';
+import ProfileSeller from './screens/profileSeller';
+import SellerUpdate from './screens/updateSeller';
 import Voice from './screens/voice';
 import Sales from './screens/sales';
 import Staff from './screens/staff';
 import Settings from './screens/settings';
 import Addstaff from './screens/addstaff';
 import AddSellerProduct from './screens/addSellerproduct';
+import StaffDetails from './screens/staffdetails';
 const Stack = createNativeStackNavigator();
 
 const App = () => {
@@ -46,7 +49,7 @@ const App = () => {
       <Drawer.Navigator
         initialRouteName="Profile"
         screenOptions={screenOptionStyle}>
-        <Drawer.Screen name="Profile" component={Profile} />
+        <Drawer.Screen name="ProfileSeller" component={ProfileSeller} />
         <Drawer.Screen name="Voice" component={Voice} />
         <Drawer.Screen name="Products" component={Products} />
         <Drawer.Screen name="Sales" component={Sales} />
@@ -60,7 +63,7 @@ const App = () => {
       <Drawer.Navigator
         initialRouteName="Profile"
         screenOptions={screenOptionStyle}>
-        <Drawer.Screen name="Profile" component={Profile} />
+        <Drawer.Screen name="ProfileOwner" component={ProfileOwner} />
         <Drawer.Screen name="Voice" component={Voice} />
         <Drawer.Screen name="Products" component={Products} />
         <Drawer.Screen name="Sales" component={Sales} />
@@ -98,6 +101,11 @@ const App = () => {
           component={SellerRegister}
           options={{headerShown: false}}
         />
+         <Stack.Screen
+          name="SellerUpdate"
+          component={SellerUpdate}
+          options={{headerShown: false}}
+        />
           <Stack.Screen
           name="OwnerRegister"
           component={OwnerRegister}
@@ -121,6 +129,11 @@ const App = () => {
          <Stack.Screen
           name="AddSellerProduct"
           component={AddSellerProduct}
+          options={{headerShown: false}}
+        />
+          <Stack.Screen
+          name="StaffDetails"
+          component={StaffDetails}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

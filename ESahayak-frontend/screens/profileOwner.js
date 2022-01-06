@@ -1,4 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
+import axios from '../axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {
   SafeAreaView,
@@ -13,7 +15,27 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-const Profile = () => {
+const ProfileOwner = () => {
+  const [user, setuser] = useState([]);
+  
+  useEffect(() => {
+    async function getResults() {
+      let id=await AsyncStorage.getItem('id')
+      console.log(id,user);
+      const results = await axios.get(`/${id}`)
+      // .then((res) => {
+      //   // console.log(res.data);
+      // })
+      // .catch((err) => {
+      //   console.log(err);
+      // });
+      setuser(results.data)
+    }
+    getResults();
+    
+   
+  },[]);
+  console.log('user',user)
   return (
     <View style={styles.background}>
       <View style={styles.cornerbg}>
@@ -91,4 +113,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Profile;
+export default ProfileOwner;
