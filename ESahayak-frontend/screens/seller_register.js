@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import axios from '../axios';
+import jwtDecode from "jwt-decode";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   SafeAreaView,
@@ -53,8 +54,29 @@ const SellerRegister = ({navigation}) => {
         console.log(res);
         //localStorage.setItem("token", res.headers["x-auth-token"]);
         AsyncStorage.setItem('token', res.headers['x-auth-token']);
+        const jwt =   AsyncStorage.getItem("token");
+        const getData = async () => {
+          try {
+            const value = await AsyncStorage.getItem('token');
+            console.log(value)
+            if (value !== null) {
+              // value previously stored
+              const user = jwtDecode(value);
+              console.log(user)
+             AsyncStorage.setItem("id", user._id);
+              console.log('token',(await AsyncStorage.getItem('token')));
+              console.log('id',(await AsyncStorage.getItem('id')));
+              navigation.navigate('mainTabSeller');
+            }
+          } catch (e) {
+            // error reading value
+            console.log(e);
+          }
+        };
+        getData();
+     
         //window.location.href = 'http://localhost:3000/seller/allpdts';
-        navigation.navigate('mainTabSeller')
+       
       })
       .catch(err => {
         console.log(err);

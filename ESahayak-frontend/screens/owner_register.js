@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import axios from '../axios';
+import jwtDecode from "jwt-decode";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   SafeAreaView,
@@ -50,9 +51,31 @@ const OwnerRegister = ({navigation}) => {
       .post('/register', fd)
       .then(res => {
         console.log('here')
-        console.log(res);
+        console.log(res.data);
+        console.log(res.headers['x-auth-token'])
+        
         //localStorage.setItem("token", res.headers["x-auth-token"]);
         AsyncStorage.setItem('token', res.headers['x-auth-token']);
+        const getData = async () => {
+          try {
+            const value = await AsyncStorage.getItem('token');
+            console.log(value)
+            if (value !== null) {
+              // value previously stored
+              const user = jwtDecode(value);
+              console.log(user)
+             AsyncStorage.setItem("id", user._id);
+              console.log('token',(await AsyncStorage.getItem('token')));
+              console.log('id',(await AsyncStorage.getItem('id')));
+              navigation.navigate('mainTabSeller');
+            }
+          } catch (e) {
+            // error reading value
+            console.log(e);
+          }
+        };
+        getData();
+        // AsyncStorage.setItem('id', res.data._id);
         //window.location.href = 'http://localhost:3000/owner/allpdts';
         navigation.navigate('mainTabOwner')
       })

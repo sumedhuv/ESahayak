@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import axios from '../axios';
+import jwtDecode from "jwt-decode";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   SafeAreaView,
@@ -25,15 +26,25 @@ const SellerLogin = ({navigation}) => {
     await axios
       .post('/buyer/', vals)
       .then(res => {
-        console.log('response', res.data);
-        const jvalue = JSON.stringify(res.data);
-        AsyncStorage.setItem('token', jvalue);
+        // console.log('response', res.data);
+        // const jvalue = JSON.stringify(res.data);
+        let token =res.data;
+        console.log(token);
+        
+        var myStr = JSON.stringify(token);
+        console.log(myStr);
+       AsyncStorage.setItem('token', token);
         const getData = async () => {
           try {
             const value = await AsyncStorage.getItem('token');
+            console.log(value)
             if (value !== null) {
               // value previously stored
-              console.log(value);
+              const user = jwtDecode(value);
+              console.log(user)
+             AsyncStorage.setItem("id", user._id);
+              console.log('token',(await AsyncStorage.getItem('token')));
+              console.log('id',(await AsyncStorage.getItem('id')));
               navigation.navigate('mainTabSeller');
             }
           } catch (e) {

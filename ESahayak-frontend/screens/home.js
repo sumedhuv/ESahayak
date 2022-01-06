@@ -15,14 +15,7 @@ import {
 import {NavigationActions} from 'react-navigation';
 
 const Home = ({navigation}) => {
-  const handleShop = async e => {
-    navigation.navigate('Login');
-    //window.location.href = "http://localhost:3000/owner";
-  };
-  const handleSeller = async e => {
-    navigation.navigate('Login');
-    //window.location.href = "http://localhost:3000/seller";
-  };
+ 
   return (
     <View style={styles.background}>
       <View style={styles.cornerbg}>

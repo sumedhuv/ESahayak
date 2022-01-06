@@ -12,11 +12,16 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-const Product = () => {
+const Product = ({navigation}) => {
   const [search, setSearch] = useState('');
 
   return (
     <View style={styles.background}>
+       <View style={{float:'left',alignItems: 'center'}}>
+        <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('AddSellerProduct')}>
+            <Text style={{fontWeight: 'bold', color: '#FFFFFF'}}>ADD PRODUCT</Text>
+          </TouchableOpacity>
+          </View>
       <View style={styles.centre}>
         <View style={styles.inputView}>
           <MaterialIcons
@@ -29,6 +34,7 @@ const Product = () => {
             style={styles.TextInput}
             placeholder="what are you looking for?"
             placeholderTextColor="#003f5c"
+            color='black'
             onChangeText={search => setSearch(search)}
           />
         </View>

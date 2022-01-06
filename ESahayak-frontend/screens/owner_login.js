@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import axios from '../axios';
+import jwtDecode from "jwt-decode";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   SafeAreaView,
@@ -33,6 +34,10 @@ const OwnerLogin = ({navigation}) => {
             const value = await AsyncStorage.getItem('token');
             if (value !== null) {
               // value previously stored
+              const user = jwtDecode(value);
+              AsyncStorage.setItem("id", user._id);
+              console.log('token',(await AsyncStorage.getItem('token')));
+              console.log('id',(await AsyncStorage.getItem('id')));
               console.log(value);
               navigation.navigate('mainTabOwner');
             }
