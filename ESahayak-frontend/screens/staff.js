@@ -1,4 +1,8 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
+import axios from '../axios';
+import jwtDecode from "jwt-decode";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import StaffComponent from './staffComponent';
 import {
   SafeAreaView,
   ScrollView,
@@ -11,64 +15,80 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-const Staff = () => {
+
+
+const Staff = ({navigation}) => {
+
+  const [staff, setstaff] = useState([]);
+  let allStaff=[];
+  // const fetchdata=async()=>{
+  //   let id=await AsyncStorage.getItem('id')
+  
+  //   let response= await 
+  //    console.log(response.data)
+  //     // if(response.data){
+  //     allStaff.push(response.data)
+   
+  //   setstaff(allStaff)
+  
+  
+  // }
+  useEffect(() => {
+    async function getResults() {
+      let id=await AsyncStorage.getItem('id')
+      console.log(id,staff);
+      const results = await axios.get(`/staff/${id}/allstaff`);
+      setstaff(results.data)
+    }
+    getResults();
+    
+   
+  },[]);
+  
+  // console.log(allStaff);
+  
+  // useEffect(() => {
+  //   async function fetchdata(){
+  //     let id=await AsyncStorage.getItem('id')
+  
+  //     await axios
+  //       .get(`/staff/${id}/allstaff`)
+  //       .then((res) => {
+  //         setstaff(res.data);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err.status);
+  //       });
+  //   }
+  //   fetchdata()
+  // }, [staff]);
+console.log('staff',staff)
   return (
     <View style={styles.background}>
-      
-      <View
-        style={{
-          flexDirection: 'row',
-          backgroundColor: 'white',
-          width: '90%',
-          height: 180,
-          borderRadius: 10,
-          marginLeft: 20,
-          marginTop: 10,
-        }}>
-        <View
-          style={{
-            height: 150,
-            width: 150,
-            margin: 20,
-          }}>
-          <Image
-            source={require('../employee.jpg')}
-            style={{
-              width: 140,
-              resizeMode: 'contain',
-              height: 140,
-              borderRadius: 100,
-            }}
-          />
-        </View>
-        <View>
-          <Text
-            style={{
-              color: 'black',
-              marginLeft: 10,
-
-              fontSize: 24,
-              marginTop: 35,
-              fontWeight: 'bold',
-            }}>
-            SARVESH K.
-          </Text>
-          <Text
-            style={{
-              color: 'black',
-              marginLeft: 20,
-
-              fontSize: 20,
-
-              fontWeight: 'bold',
-            }}>
-            Employee
-          </Text>
-          <TouchableOpacity style={styles.loginBtn}>
-            <Text style={{fontWeight: 'bold', color: '#FFFFFF'}}>REMOVE</Text>
+        <View style={{float:'left',alignItems: 'center'}}>
+        <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('Addstaff')}>
+            <Text style={{fontWeight: 'bold', color: '#FFFFFF'}}>ADD</Text>
           </TouchableOpacity>
-        </View>
-      </View>
+          </View>
+          {staff.length === 0 ? (
+            <Text>You Have No staff...</Text>
+          ) : (
+            staff.map((x) => (
+            <View key={x._id}>
+              <StaffComponent
+                    staff_name={x.staff_name}
+                    staff_phone={x.staff_phone}
+                    staff_salary={x.staff_salary}
+                    staff_last_salary_paid={x.staff_last_salary_paid}
+                    staff_upi={x.staff_upi}
+                    staff_image={x.staff_image}
+                    staff_joining_date={x.staff_joining_date}
+                    _id={x._id}
+                  />
+             </View> 
+            ))
+          )}
+     
     </View>
   );
 };

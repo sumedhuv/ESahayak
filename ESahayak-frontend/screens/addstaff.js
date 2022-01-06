@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import axios from './axios';
+import axios from '../axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   SafeAreaView,
@@ -36,7 +36,7 @@ const Addstaff = () => {
     const fd = new FormData();
     fd.append('staff_image', staff_image);
     fd.append('staff_name', staff_name);
-    fd.append('staff_email', staff_email);
+    // fd.append('staff_email', staff_email);
     fd.append('staff_phone', staff_phone);
     fd.append('staff_salary', staff_salary);
     fd.append('staff_last_salary_paid', staff_last_salary_paid);
@@ -44,10 +44,13 @@ const Addstaff = () => {
 
     console.log(staff_image);
     console.log('data', fd);
+    let id=await AsyncStorage.getItem('id')
+  
+    let token=await AsyncStorage.getItem("token")
     await axios
-    .post(`/staff/${AsyncStorage.getItem('id')}/addstaff`, fd, {
+    .post(`/staff/${id}/addstaff`, fd, {
       headers: {
-        "x-auth-token": localStorage.getItem("token"),
+        "x-auth-token":token,
       },
     })
     .then((res) => {
@@ -64,7 +67,7 @@ const Addstaff = () => {
     launchImageLibrary({noData: true}, response => {
       console.log(response.assets[0].uri);
       if (response) {
-        setSellerImage(response);
+        setStaffImage(response);
         console.log(staff_image);
       }
     });
@@ -75,7 +78,7 @@ const Addstaff = () => {
       <View style={styles.background}>
         <View style={styles.cornerbg}>
           <Image
-            source={require('./corner.png')}
+            source={require('../corner.png')}
             style={{height: 120, width: 150}}
           />
         </View>

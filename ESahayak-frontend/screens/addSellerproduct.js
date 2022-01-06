@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import axios from './axios';
+import axios from '../axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   SafeAreaView,
@@ -15,46 +15,50 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
-const AddProduct = () => {
-  const [staff_name, setStaffName] = useState('');
-  const [staff_email, setStaffEmail] = useState('');
-  const [staff_phone, setStaffPhone] = useState('');
-  const [staff_last_salary_paid,setStaffLastSalary]=useState('');
-  const [staff_salary,setStaffSalary]=useState('');
-  const [staff_image, setStaffImage] = useState('');
-  const [staff_upi, setStaffUpi] = useState('');
+const AddSellerProduct = ({navigation}) => {
+  const [buy_name, setbuy_name] = useState("");
+  const [buy_price, setbuy_price] = useState("");
+  const [buy_quantity, setbuy_quantity] = useState("");
+  const [buy_image, setbuy_image] = useState("");
   
   // const handleChangeImage = (e) => {
   //   console.log(e.target.files[0]);
-  //   setstaff_image(e.target.files[0]);
+  //   setbuy_image(e.target.files[0]);
   // };
   const handleSubmit = async e => {
     e.preventDefault();
     // if (!agree) {
     // console.log("Please Agree terms & conditons");
     // } else {
-    const fd = new FormData();
-    fd.append('staff_image', staff_image);
-    fd.append('staff_name', staff_name);
-    fd.append('staff_email', staff_email);
-    fd.append('staff_phone', staff_phone);
-    fd.append('staff_salary', staff_salary);
-    fd.append('staff_last_salary_paid', staff_last_salary_paid);
-    fd.append('staff_upi', staff_upi);
+      const fd = new FormData();
+      fd.append("buy_image", buy_image);
+      fd.append("buy_price", buy_price);
+      fd.append("buy_quantity", buy_quantity);
+      fd.append("buy_name", buy_name);
+    
 
-    console.log(staff_image);
+    console.log(buy_image);
     console.log('data', fd);
+    //console.log('id',await AsyncStorage.getItem("id"))
+    //console.log('token',await AsyncStorage.getItem("token"))
+    let id=await AsyncStorage.getItem('id')
+    let token=await AsyncStorage.getItem("token")
+    console.log(id)
+    console.log(token)
     await axios
-    .post(`/staff/${AsyncStorage.getItem('id')}/addstaff`, fd, {
+    .post(`/buyer/${id}/addpdt`, fd, {
+      
+
       headers: {
-        "x-auth-token": localStorage.getItem("token"),
+        "x-auth-token": token,
       },
     })
     .then((res) => {
       console.log(res);
-    //   window.location.href = "http://localhost:3000/owner/staff";
+    //   window.location.href = "http://localhost:3000/owner/pdt";
     })
     .catch((err) => {
+      console.log('here')
       console.log(err.message);
     });
 
@@ -64,8 +68,8 @@ const AddProduct = () => {
     launchImageLibrary({noData: true}, response => {
       console.log(response.assets[0].uri);
       if (response) {
-        setSellerImage(response);
-        console.log(staff_image);
+        setbuy_image(response);
+        
       }
     });
   };
@@ -75,7 +79,7 @@ const AddProduct = () => {
       <View style={styles.background}>
         <View style={styles.cornerbg}>
           <Image
-            source={require('./corner.png')}
+            source={require('../corner.png')}
             style={{height: 120, width: 150}}
           />
         </View>
@@ -88,13 +92,13 @@ const AddProduct = () => {
               marginTop: 20,
               marginBottom: 20,
             }}>
-            ADD STAFF DETAILS
+            ADD PRODUCT DETAILS
           </Text>
           <View>
-            {staff_image ? (
+            {buy_image ? (
               <View style={styles.boxSimple}>
                 <Image
-                  source={{uri: staff_image.assets[0].uri}}
+                  source={{uri: buy_image.assets[0].uri}}
                   style={{width: 100, height: 100}}
                 />
                 {/* <Button title="Upload Photo" onPress={handleUploadPhoto} /> */}
@@ -110,58 +114,40 @@ const AddProduct = () => {
           <View style={styles.inputView}>
             <TextInput
               style={styles.TextInput}
-              placeholder="ENTER STAFF NAME"
+              placeholder="ENTER pdt NAME"
               placeholderTextColor="#003f5c"
               color="black"
-              name="staff_name"
-              onChangeText={name => setStaffName(name)}
+              name="pdt_name"
+              onChangeText={name => setbuy_name(name)}
             />
           </View>
-          <View style={styles.inputView}>
-            <TextInput
-              style={styles.TextInput}
-              placeholder="ENTER SALARY"
-              placeholderTextColor="#003f5c"
-              color="black"
-              name="staff_salary"
-              onChangeText={salary => setStaffSalary(salary)}
-            />
-          </View>
-          <View style={styles.inputView}>
-            <TextInput
-              style={styles.TextInput}
-              placeholder="ENTER LAST SALARY PAID"
-              placeholderTextColor="#003f5c"
-              color="black"
-              name="staff_last_salary_paid"
-              onChangeText={salary => setStaffLastSalary(salary)}
-            />
-          </View>
-          <View style={styles.inputView}>
-            <TextInput
-              style={styles.TextInput}
-              placeholder="PHONE NUMBER"
-              placeholderTextColor="#003f5c"
-              color="black"
-              name="staff_phone"
-              onChangeText={no => setStaffPhone(no)}
-            />
-          </View>
-
          
           <View style={styles.inputView}>
             <TextInput
               style={styles.TextInput}
-              placeholder="UPI"
-              name="staff_upi"
+              placeholder="ENTER PRICE"
               placeholderTextColor="#003f5c"
               color="black"
-              onChangeText={upi => setStaffUpi(upi)}
+              name="pdt_last_salary_paid"
+              onChangeText={salary => setbuy_price(salary)}
             />
           </View>
+          <View style={styles.inputView}>
+            <TextInput
+              style={styles.TextInput}
+              placeholder="ENTER QUANTITY"
+              placeholderTextColor="#003f5c"
+              color="black"
+              name="pdt_phone"
+              onChangeText={no => setbuy_quantity(no)}
+            />
+          </View>
+
+         
+          
         
           <TouchableOpacity style={styles.loginBtn} onPress={handleSubmit}>
-            <Text style={{fontWeight: 'bold', color: '#FFFFFF'}}>ADD STAFF</Text>
+            <Text style={{fontWeight: 'bold', color: '#FFFFFF'}}>ADD</Text>
           </TouchableOpacity>
         
         </View>
@@ -222,4 +208,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddProduct;
+export default AddSellerProduct;

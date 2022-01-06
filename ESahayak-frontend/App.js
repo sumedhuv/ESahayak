@@ -28,7 +28,8 @@ import Voice from './screens/voice';
 import Sales from './screens/sales';
 import Staff from './screens/staff';
 import Settings from './screens/settings';
-
+import Addstaff from './screens/addstaff';
+import AddSellerProduct from './screens/addSellerproduct';
 const Stack = createNativeStackNavigator();
 
 const App = () => {
@@ -110,6 +111,16 @@ const App = () => {
          <Stack.Screen
           name="mainTabOwner"
           component={mainTabOwner}
+          options={{headerShown: false}}
+        />
+         <Stack.Screen
+          name="Addstaff"
+          component={Addstaff}
+          options={{headerShown: false}}
+        />
+         <Stack.Screen
+          name="AddSellerProduct"
+          component={AddSellerProduct}
           options={{headerShown: false}}
         />
       </Stack.Navigator>
