@@ -13,16 +13,16 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-
+import { useNavigation } from '@react-navigation/native';
 
 
 const StaffComponent = (props) => {
 
- 
+    const navigation = useNavigation(); 
 console.log('props',props)
   return (
 
-            
+    <TouchableOpacity  onPress={()=>navigation.navigate('StaffDetails',{'id':props._id})}>  
               <View
         style={{
           flexDirection: 'row',
@@ -77,6 +77,7 @@ console.log('props',props)
           </TouchableOpacity>
         </View>
       </View>
+      </TouchableOpacity>
               
        
   );

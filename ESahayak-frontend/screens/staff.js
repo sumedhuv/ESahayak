@@ -37,7 +37,13 @@ const Staff = ({navigation}) => {
     async function getResults() {
       let id=await AsyncStorage.getItem('id')
       console.log(id,staff);
-      const results = await axios.get(`/staff/${id}/allstaff`);
+      const results = await axios.get(`/staff/${id}/allstaff`)
+      // .then((res) => {
+      //   console.log(res.data);
+      // })
+      // .catch((err) => {
+      //   console.log(err);
+      // });;
       setstaff(results.data)
     }
     getResults();
