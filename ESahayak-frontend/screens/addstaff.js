@@ -19,11 +19,11 @@ const Addstaff = () => {
   const [staff_name, setStaffName] = useState('');
   const [staff_email, setStaffEmail] = useState('');
   const [staff_phone, setStaffPhone] = useState('');
-  const [staff_last_salary_paid,setStaffLastSalary]=useState('');
-  const [staff_salary,setStaffSalary]=useState('');
+  const [staff_last_salary_paid, setStaffLastSalary] = useState('');
+  const [staff_salary, setStaffSalary] = useState('');
   const [staff_image, setStaffImage] = useState('');
   const [staff_upi, setStaffUpi] = useState('');
-  
+
   // const handleChangeImage = (e) => {
   //   console.log(e.target.files[0]);
   //   setstaff_image(e.target.files[0]);
@@ -44,23 +44,24 @@ const Addstaff = () => {
 
     console.log(staff_image);
     console.log('data', fd);
-    let id=await AsyncStorage.getItem('id')
-  
-    let token=await AsyncStorage.getItem("token")
-    await axios
-    .post(`/staff/${id}/addstaff`, fd, {
-      headers: {
-        "x-auth-token":token,
-      },
-    })
-    .then((res) => {
-      console.log(res);
-    //   window.location.href = "http://localhost:3000/owner/staff";
-    })
-    .catch((err) => {
-      console.log(err.message);
-    });
+    let id = await AsyncStorage.getItem('id');
+    console.log(id);
 
+    let token = await AsyncStorage.getItem('token');
+    console.log(token);
+    await axios
+      .post(`/staff/${id}/addstaff`, fd, {
+        headers: {
+          'x-auth-token': token,
+        },
+      })
+      .then(res => {
+        console.log(res);
+        //   window.location.href = "http://localhost:3000/owner/staff";
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   const handleChoosePhoto = () => {
@@ -72,7 +73,7 @@ const Addstaff = () => {
       }
     });
   };
-  
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.background}>
@@ -151,7 +152,6 @@ const Addstaff = () => {
             />
           </View>
 
-         
           <View style={styles.inputView}>
             <TextInput
               style={styles.TextInput}
@@ -162,11 +162,12 @@ const Addstaff = () => {
               onChangeText={upi => setStaffUpi(upi)}
             />
           </View>
-        
+
           <TouchableOpacity style={styles.loginBtn} onPress={handleSubmit}>
-            <Text style={{fontWeight: 'bold', color: '#FFFFFF'}}>ADD STAFF</Text>
+            <Text style={{fontWeight: 'bold', color: '#FFFFFF'}}>
+              ADD STAFF
+            </Text>
           </TouchableOpacity>
-        
         </View>
       </View>
     </ScrollView>

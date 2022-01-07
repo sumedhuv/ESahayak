@@ -1,6 +1,6 @@
-import React,{useState,useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from '../axios';
-import jwtDecode from "jwt-decode";
+import jwtDecode from 'jwt-decode';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   SafeAreaView,
@@ -13,17 +13,37 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
+const StaffComponent = props => {
+  const navigation = useNavigation();
+  console.log('props', props);
+  const handleDelete = async () => {
+    console.log('delete Staff');
+    let o_id = await AsyncStorage.getItem('id');
+    let tok = await AsyncStorage.getItem('token');
+    let id = props._id;
+    console.log(o_id);
+    console.log(id);
+    console.log(tok);
 
-const StaffComponent = (props) => {
-
-    const navigation = useNavigation(); 
-console.log('props',props)
+    await axios
+      .delete(`staff/${o_id}/${id}/delete`, {
+        headers: {
+          'x-auth-token': tok,
+        },
+      })
+      .then(res => {
+        console.log('staff deleted');
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
   return (
-
-    <TouchableOpacity  onPress={()=>navigation.navigate('StaffDetails',{'id':props._id})}>  
-              <View
+    <TouchableOpacity
+      onPress={() => navigation.navigate('StaffDetails', {id: props._id})}>
+      <View
         style={{
           flexDirection: 'row',
           backgroundColor: 'white',
@@ -59,7 +79,7 @@ console.log('props',props)
               marginTop: 35,
               fontWeight: 'bold',
             }}>
-           {props?(props.staff_name):null}
+            {props ? props.staff_name : null}
           </Text>
           <Text
             style={{
@@ -72,14 +92,12 @@ console.log('props',props)
             }}>
             Employee
           </Text>
-          <TouchableOpacity style={styles.loginBtn}>
+          <TouchableOpacity style={styles.loginBtn} onPress={handleDelete}>
             <Text style={{fontWeight: 'bold', color: '#FFFFFF'}}>REMOVE</Text>
           </TouchableOpacity>
         </View>
       </View>
-      </TouchableOpacity>
-              
-       
+    </TouchableOpacity>
   );
 };
 

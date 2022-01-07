@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from '../axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -15,30 +15,27 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-const StaffDetails = ({ route, navigation }) => {
+const StaffDetails = ({route, navigation}) => {
   const [user, setuser] = useState([]);
-  console.log('params',route.params)
-  
-  
+  console.log('params', route.params);
+
   useEffect(() => {
     async function getResults() {
-      let oid=await AsyncStorage.getItem('id');
-      let staffid=route.params.id;
-      console.log(id,user);
-      const results = await axios.get(`/staff/${oid}/${staffid}`)
-    //   .then((res) => {
-    //     console.log(res.data);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-      setuser(results.data)
+      let oid = await AsyncStorage.getItem('id');
+      let staffid = route.params.id;
+      console.log(oid, user);
+      const results = await axios.get(`/staff/${oid}/${staffid}`);
+      //   .then((res) => {
+      //     console.log(res.data);
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
+      setuser(results.data);
     }
     getResults();
-    
-   
-  },[]);
-  console.log('staff',user)
+  }, []);
+  console.log('staff', user);
   return (
     <View style={styles.background}>
       <View style={styles.cornerbg}>
@@ -61,14 +58,44 @@ const StaffDetails = ({ route, navigation }) => {
             color: 'black',
             marginBottom: 20,
           }}>
-          WELCOME MAHESH!
+          WELCOME {user.staff_name}!
         </Text>
-
-        <TouchableOpacity style={styles.loginBtn}>
-          <Text style={{fontWeight: 'bold', color: '#FFFFFF', fontSize: 18}}>
-            VIEW DASHBOARD
-          </Text>
-        </TouchableOpacity>
+        <Text
+          style={{
+            fontWeight: 'bold',
+            fontSize: 22,
+            color: 'black',
+            marginBottom: 20,
+          }}>
+          Last Salary Paid: {user.staff_last_salary_paid}
+        </Text>
+        <Text
+          style={{
+            fontWeight: 'bold',
+            fontSize: 22,
+            color: 'black',
+            marginBottom: 20,
+          }}>
+          Staff Salary: {user.staff_salary}
+        </Text>
+        <Text
+          style={{
+            fontWeight: 'bold',
+            fontSize: 22,
+            color: 'black',
+            marginBottom: 20,
+          }}>
+          Phone Number: {user.staff_phone}
+        </Text>
+        <Text
+          style={{
+            fontWeight: 'bold',
+            fontSize: 22,
+            color: 'black',
+            marginBottom: 20,
+          }}>
+          UPI ID: {user.staff_upi}
+        </Text>
       </View>
     </View>
   );
