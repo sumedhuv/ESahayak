@@ -26,6 +26,9 @@ import Products from './screens/product';
 import ProfileOwner from './screens/profileOwner';
 import ProfileSeller from './screens/profileSeller';
 import SellerUpdate from './screens/updateSeller';
+import OwnerUpdate from './screens/updateOwner';
+import StaffUpdate from './screens/updateStaff';
+import ProductUpdate from './screens/updateProduct';
 import Voice from './screens/voice';
 import Sales from './screens/sales';
 import Staff from './screens/staff';
@@ -33,6 +36,8 @@ import Settings from './screens/settings';
 import Addstaff from './screens/addstaff';
 import AddSellerProduct from './screens/addSellerproduct';
 import StaffDetails from './screens/staffdetails';
+import ProductDetails from './screens/productdetails';
+import OwnerDetails from './screens/ownerDetails';
 const Stack = createNativeStackNavigator();
 
 const App = () => {
@@ -106,6 +111,21 @@ const App = () => {
           component={SellerUpdate}
           options={{headerShown: false}}
         />
+        <Stack.Screen
+          name="OwnerUpdate"
+          component={OwnerUpdate}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="ProductUpdate"
+          component={ProductUpdate}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="StaffUpdate"
+          component={StaffUpdate}
+          options={{headerShown: false}}
+        />
           <Stack.Screen
           name="OwnerRegister"
           component={OwnerRegister}
@@ -134,6 +154,16 @@ const App = () => {
           <Stack.Screen
           name="StaffDetails"
           component={StaffDetails}
+          options={{headerShown: false}}
+        />
+         <Stack.Screen
+          name="ProductDetails"
+          component={ProductDetails}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="OwnerDetails"
+          component={OwnerDetails}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

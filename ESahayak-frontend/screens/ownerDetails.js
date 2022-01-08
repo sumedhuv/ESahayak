@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from '../axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -15,27 +15,25 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-const ProfileOwner = ({navigation}) => {
+const ownerDetails = ({route, navigation}) => {
   const [user, setuser] = useState([]);
-  
+
   useEffect(() => {
     async function getResults() {
-      let id=await AsyncStorage.getItem('id')
-      console.log(id,user);
-      const results = await axios.get(`/${id}`)
+      let id = await AsyncStorage.getItem('id');
+      console.log(id, user);
+      const results = await axios.get(`/${id}`);
       // .then((res) => {
       //   // console.log(res.data);
       // })
       // .catch((err) => {
       //   console.log(err);
       // });
-      setuser(results.data)
+      setuser(results.data);
     }
     getResults();
-    
-   
-  },[]);
-  console.log('owner',user)
+  }, []);
+  console.log('user', user);
   return (
     <View style={styles.background}>
       <View style={styles.cornerbg}>
@@ -45,7 +43,7 @@ const ProfileOwner = ({navigation}) => {
         />
       </View>
       <View style={styles.centre}>
-        <View style={{height: 250, width: 250, marginTop: 30}}>
+      <View style={{height: 250, width: 250, marginTop: 30}}>
           {user.owner_image?(<>
             <Image
             source={{uri:`https://stormy-island-55490.herokuapp.com/${user.owner_image}`}}
@@ -65,14 +63,49 @@ const ProfileOwner = ({navigation}) => {
             color: 'black',
             marginBottom: 20,
           }}>
-          WELCOME {user.owner_name}
+          Owner Details
         </Text>
-
-        <TouchableOpacity style={styles.loginBtn}  onPress={() => {
-            navigation.navigate('OwnerDetails');
+        <Text
+          style={{
+            fontWeight: 'bold',
+            fontSize: 22,
+            color: 'black',
+            marginBottom: 20,
           }}>
+          Email Id: {user.owner_email}
+        </Text>
+        <Text
+          style={{
+            fontWeight: 'bold',
+            fontSize: 22,
+            color: 'black',
+            marginBottom: 20,
+          }}>
+          Phone Number: {user.owner_phone}
+        </Text>
+        <Text
+          style={{
+            fontWeight: 'bold',
+            fontSize: 22,
+            color: 'black',
+            marginBottom: 20,
+          }}>
+          Shop Address: {user.shop_address}
+        </Text>
+        <Text
+          style={{
+            fontWeight: 'bold',
+            fontSize: 22,
+            color: 'black',
+            marginBottom: 20,
+          }}>
+          UPI ID: {user.owner_upi}
+        </Text>
+        <TouchableOpacity
+          style={styles.loginBtn}
+          onPress={() => navigation.navigate('OwnerUpdate')}>
           <Text style={{fontWeight: 'bold', color: '#FFFFFF', fontSize: 18}}>
-            VIEW DASHBOARD
+            UPDATE
           </Text>
         </TouchableOpacity>
       </View>
@@ -122,4 +155,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProfileOwner;
+export default ownerDetails;

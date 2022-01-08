@@ -46,10 +46,15 @@ const StaffDetails = ({route, navigation}) => {
       </View>
       <View style={styles.centre}>
         <View style={{height: 250, width: 250, marginTop: 30}}>
-          <Image
-            source={require('../profile.png')}
+        {user.staff_image?(<>
+            <Image
+            source={{uri:`https://stormy-island-55490.herokuapp.com/${user.staff_image}`}}
             style={{width: null, resizeMode: 'contain', height: 220}}
-          />
+          /></>):(<>
+           <Image
+             source={require('../profile.png')}
+            style={{width: null, resizeMode: 'contain', height: 220}}
+          /></>)}
         </View>
         <Text
           style={{
@@ -96,7 +101,13 @@ const StaffDetails = ({route, navigation}) => {
           }}>
           UPI ID: {user.staff_upi}
         </Text>
+        <TouchableOpacity style={styles.loginBtn} onPress={()=>navigation.navigate('StaffUpdate', {id: user._id})}>
+          <Text style={{fontWeight: 'bold', color: '#FFFFFF', fontSize: 18}}>
+            UPDATE
+          </Text>
+        </TouchableOpacity>
       </View>
+    
     </View>
   );
 };

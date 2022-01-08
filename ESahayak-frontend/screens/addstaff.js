@@ -15,7 +15,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
-const Addstaff = () => {
+const Addstaff = ({navigation}) => {
   const [staff_name, setStaffName] = useState('');
   const [staff_email, setStaffEmail] = useState('');
   const [staff_phone, setStaffPhone] = useState('');
@@ -34,7 +34,15 @@ const Addstaff = () => {
     // console.log("Please Agree terms & conditons");
     // } else {
     const fd = new FormData();
-    fd.append('staff_image', staff_image);
+    // fd.append('staff_image', staff_image);
+    fd.append('staff_image',{
+      name: staff_image.fileName,
+      type: staff_image.type,
+      uri: 
+      //Platform.OS === 'ios' ? photo.uri.replace('file://', '') :
+      staff_image.uri
+   
+      });
     fd.append('staff_name', staff_name);
     // fd.append('staff_email', staff_email);
     fd.append('staff_phone', staff_phone);
@@ -52,11 +60,14 @@ const Addstaff = () => {
     await axios
       .post(`/staff/${id}/addstaff`, fd, {
         headers: {
+          Accept:'application/json',
+          'Content-type':'multipart/form-data',
           'x-auth-token': token,
         },
       })
       .then(res => {
         console.log(res);
+        navigation.navigate('Staff')
         //   window.location.href = "http://localhost:3000/owner/staff";
       })
       .catch(err => {
@@ -68,7 +79,7 @@ const Addstaff = () => {
     launchImageLibrary({noData: true}, response => {
       console.log(response.assets[0].uri);
       if (response) {
-        setStaffImage(response);
+        setStaffImage(response.assets[0]);
         console.log(staff_image);
       }
     });
@@ -98,7 +109,7 @@ const Addstaff = () => {
             {staff_image ? (
               <View style={styles.boxSimple}>
                 <Image
-                  source={{uri: staff_image.assets[0].uri}}
+                  source={{uri: staff_image.uri}}
                   style={{width: 100, height: 100}}
                 />
                 {/* <Button title="Upload Photo" onPress={handleUploadPhoto} /> */}

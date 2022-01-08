@@ -37,7 +37,15 @@ const SellerRegister = ({navigation}) => {
     // console.log("Please Agree terms & conditons");
     // } else {
     const fd = new FormData();
-    fd.append('seller_image', seller_image);
+    // fd.append('seller_image', seller_image);
+    fd.append('seller_image',{
+      name: seller_image.fileName,
+      type: seller_image.type,
+      uri: 
+      //Platform.OS === 'ios' ? photo.uri.replace('file://', '') :
+      seller_image.uri
+   
+      });
     fd.append('seller_name', seller_name);
     fd.append('seller_email', seller_email);
     fd.append('seller_phone', seller_phone);
@@ -48,7 +56,12 @@ const SellerRegister = ({navigation}) => {
     console.log(seller_image);
     console.log('data', fd);
     await axios
-      .post('/buyer/register', fd)
+      .post('/buyer/register', fd,{
+        headers:{
+          Accept:'application/json',
+          'Content-type':'multipart/form-data',
+        }
+      })
       .then(res => {
         console.log('here')
         console.log(res);
@@ -88,7 +101,7 @@ const SellerRegister = ({navigation}) => {
     launchImageLibrary({noData: true}, response => {
       console.log(response.assets[0].uri);
       if (response) {
-        setSellerImage(response);
+        setSellerImage(response.assets[0]);
         console.log(seller_image);
       }
     });
@@ -145,7 +158,7 @@ const SellerRegister = ({navigation}) => {
             {seller_image ? (
               <View style={styles.boxSimple}>
                 <Image
-                  source={{uri: seller_image.assets[0].uri}}
+                  source={{uri: seller_image.uri}}
                   style={{width: 100, height: 100}}
                 />
                 {/* <Button title="Upload Photo" onPress={handleUploadPhoto} /> */}

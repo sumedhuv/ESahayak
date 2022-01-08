@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from '../axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -15,27 +15,27 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-const ProfileOwner = ({navigation}) => {
+const ProductDetails = ({route, navigation}) => {
   const [user, setuser] = useState([]);
-  
+  console.log('params', route.params);
+
   useEffect(() => {
     async function getResults() {
-      let id=await AsyncStorage.getItem('id')
-      console.log(id,user);
-      const results = await axios.get(`/${id}`)
-      // .then((res) => {
-      //   // console.log(res.data);
-      // })
-      // .catch((err) => {
-      //   console.log(err);
-      // });
-      setuser(results.data)
+      let sid = await AsyncStorage.getItem('id');
+      let prodid = route.params.id;
+      console.log(sid, user);
+      const results = await axios.get(`/buyer/${sid}/${prodid}`);
+      //   .then((res) => {
+      //     console.log(res.data);
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
+      setuser(results.data);
     }
     getResults();
-    
-   
-  },[]);
-  console.log('owner',user)
+  }, []);
+  console.log('product', user);
   return (
     <View style={styles.background}>
       <View style={styles.cornerbg}>
@@ -46,17 +46,15 @@ const ProfileOwner = ({navigation}) => {
       </View>
       <View style={styles.centre}>
         <View style={{height: 250, width: 250, marginTop: 30}}>
-          {user.owner_image?(<>
+        {user.buy_image?(<>
             <Image
-            source={{uri:`https://stormy-island-55490.herokuapp.com/${user.owner_image}`}}
+            source={{uri:`https://stormy-island-55490.herokuapp.com/${user.buy_image}`}}
             style={{width: null, resizeMode: 'contain', height: 220}}
           /></>):(<>
            <Image
              source={require('../profile.png')}
             style={{width: null, resizeMode: 'contain', height: 220}}
           /></>)}
-          
-         
         </View>
         <Text
           style={{
@@ -65,14 +63,29 @@ const ProfileOwner = ({navigation}) => {
             color: 'black',
             marginBottom: 20,
           }}>
-          WELCOME {user.owner_name}
+          Product: {user.buy_name}!
         </Text>
-
-        <TouchableOpacity style={styles.loginBtn}  onPress={() => {
-            navigation.navigate('OwnerDetails');
+        <Text
+          style={{
+            fontWeight: 'bold',
+            fontSize: 22,
+            color: 'black',
+            marginBottom: 20,
           }}>
+         Product Price: {user.buy_price}
+        </Text>
+        <Text
+          style={{
+            fontWeight: 'bold',
+            fontSize: 22,
+            color: 'black',
+            marginBottom: 20,
+          }}>
+         Quantity: {user.buy_quantity}
+        </Text>
+        <TouchableOpacity style={styles.loginBtn} onPress={()=>navigation.navigate('ProductUpdate',{id:user. _id})}>
           <Text style={{fontWeight: 'bold', color: '#FFFFFF', fontSize: 18}}>
-            VIEW DASHBOARD
+            UPDATE
           </Text>
         </TouchableOpacity>
       </View>
@@ -122,4 +135,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProfileOwner;
+export default ProductDetails;
