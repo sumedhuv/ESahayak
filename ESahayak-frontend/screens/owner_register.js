@@ -37,7 +37,14 @@ const OwnerRegister = ({navigation}) => {
     // console.log("Please Agree terms & conditons");
     // } else {
     const fd = new FormData();
-    fd.append('owner_image', owner_image);
+    fd.append('owner_image',{
+    name: owner_image.fileName,
+    type: owner_image.type,
+    uri: 
+    //Platform.OS === 'ios' ? photo.uri.replace('file://', '') :
+    owner_image.uri
+ 
+    });
     fd.append('owner_name', owner_name);
     fd.append('owner_email', owner_email);
     fd.append('owner_phone', owner_phone);
@@ -48,7 +55,12 @@ const OwnerRegister = ({navigation}) => {
     console.log(owner_image);
     console.log('data', fd);
     await axios
-      .post('/register', fd)
+      .post('/register', fd,{
+        headers:{
+          Accept:'application/json',
+          'Content-type':'multipart/form-data',
+        }
+      })
       .then(res => {
         console.log('here')
         console.log(res.data);
@@ -88,9 +100,9 @@ const OwnerRegister = ({navigation}) => {
 
   const handleChoosePhoto = () => {
     launchImageLibrary({noData: true}, response => {
-      console.log(response.assets[0].uri);
+      console.log(response.assets[0]);
       if (response) {
-        setownerImage(response);
+        setownerImage(response.assets[0]);
         console.log(owner_image);
       }
     });
@@ -147,7 +159,7 @@ const OwnerRegister = ({navigation}) => {
             {owner_image ? (
               <View style={styles.boxSimple}>
                 <Image
-                  source={{uri: owner_image.assets[0].uri}}
+                  source={{uri: owner_image.uri}}
                   style={{width: 100, height: 100}}
                 />
                 {/* <Button title="Upload Photo" onPress={handleUploadPhoto} /> */}

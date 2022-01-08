@@ -31,7 +31,15 @@ const AddSellerProduct = ({navigation}) => {
     // console.log("Please Agree terms & conditons");
     // } else {
       const fd = new FormData();
-      fd.append("buy_image", buy_image);
+      // fd.append("buy_image", buy_image);
+      fd.append('buy_image',{
+        name: buy_image.fileName,
+        type: buy_image.type,
+        uri: 
+        //Platform.OS === 'ios' ? photo.uri.replace('file://', '') :
+        buy_image.uri
+     
+        });
       fd.append("buy_price", buy_price);
       fd.append("buy_quantity", buy_quantity);
       fd.append("buy_name", buy_name);
@@ -47,14 +55,15 @@ const AddSellerProduct = ({navigation}) => {
     console.log(token)
     await axios
     .post(`/buyer/${id}/addpdt`, fd, {
-      
-
       headers: {
+        Accept:'application/json',
+        'Content-type':'multipart/form-data',
         "x-auth-token": token,
       },
     })
     .then((res) => {
       console.log(res);
+      navigation.navigate('Products')
     //   window.location.href = "http://localhost:3000/owner/pdt";
     })
     .catch((err) => {
@@ -68,7 +77,7 @@ const AddSellerProduct = ({navigation}) => {
     launchImageLibrary({noData: true}, response => {
       console.log(response.assets[0].uri);
       if (response) {
-        setbuy_image(response);
+        setbuy_image(response.assets[0]);
         
       }
     });
@@ -98,7 +107,7 @@ const AddSellerProduct = ({navigation}) => {
             {buy_image ? (
               <View style={styles.boxSimple}>
                 <Image
-                  source={{uri: buy_image.assets[0].uri}}
+                  source={{uri: buy_image.uri}}
                   style={{width: 100, height: 100}}
                 />
                 {/* <Button title="Upload Photo" onPress={handleUploadPhoto} /> */}

@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from '../axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -17,25 +17,23 @@ import {
 
 const ProfileSeller = ({navigation}) => {
   const [user, setuser] = useState([]);
-  
+
   useEffect(() => {
     async function getResults() {
-      let id=await AsyncStorage.getItem('id')
+      let id = await AsyncStorage.getItem('id');
       console.log(id);
-      const results = await axios.get(`/buyer/${id}`)
+      const results = await axios.get(`/buyer/${id}`);
       // .then((res) => {
       //   console.log(res.data);
       // })
       // .catch((err) => {
       //   console.log(err);
       // });
-      setuser(results.data)
+      setuser(results.data);
     }
     getResults();
-    
-   
-  },[]);
-  console.log(user)
+  }, []);
+  console.log(user);
   return (
     <View style={styles.background}>
       <View style={styles.cornerbg}>
@@ -45,11 +43,18 @@ const ProfileSeller = ({navigation}) => {
         />
       </View>
       <View style={styles.centre}>
-        <View style={{height: 250, width: 250, marginTop: 30}}>
-          <Image
-            source={require('../profile.png')}
+      <View style={{height: 250, width: 250, marginTop: 30}}>
+          {user.seller_image?(<>
+            <Image
+            source={{uri:`https://stormy-island-55490.herokuapp.com/${user.seller_image}`}}
             style={{width: null, resizeMode: 'contain', height: 220}}
-          />
+          /></>):(<>
+           <Image
+             source={require('../profile.png')}
+            style={{width: null, resizeMode: 'contain', height: 220}}
+          /></>)}
+          
+         
         </View>
         <Text
           style={{
@@ -58,10 +63,47 @@ const ProfileSeller = ({navigation}) => {
             color: 'black',
             marginBottom: 20,
           }}>
-          WELCOME MAHESH!
+          WELCOME {user.seller_name}!
         </Text>
-
-        <TouchableOpacity style={styles.loginBtn} onPress={()=>navigation.navigate('SellerUpdate')}>
+        <Text
+          style={{
+            fontWeight: 'bold',
+            fontSize: 22,
+            color: 'black',
+            marginBottom: 20,
+          }}>
+          Email Id: {user.seller_email}
+        </Text>
+        <Text
+          style={{
+            fontWeight: 'bold',
+            fontSize: 22,
+            color: 'black',
+            marginBottom: 20,
+          }}>
+          Phone Number: {user.seller_phone}
+        </Text>
+        <Text
+          style={{
+            fontWeight: 'bold',
+            fontSize: 22,
+            color: 'black',
+            marginBottom: 20,
+          }}>
+          Shop Address: {user.shop_address}
+        </Text>
+        <Text
+          style={{
+            fontWeight: 'bold',
+            fontSize: 22,
+            color: 'black',
+            marginBottom: 20,
+          }}>
+          UPI ID: {user.seller_upi}
+        </Text>
+        <TouchableOpacity
+          style={styles.loginBtn}
+          onPress={() => navigation.navigate('SellerUpdate')}>
           <Text style={{fontWeight: 'bold', color: '#FFFFFF', fontSize: 18}}>
             UPDATE
           </Text>

@@ -15,35 +15,34 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
-const StaffComponent = props => {
+const ProductComponent = props => {
   const navigation = useNavigation();
   console.log('props', props);
   const handleDelete = async () => {
-    console.log('delete Staff');
-    let o_id = await AsyncStorage.getItem('id');
-    let tok = await AsyncStorage.getItem('token');
-    let id = props._id;
-    console.log(o_id);
-    console.log(id);
-    console.log(tok);
+    console.log('delete Product');
+    // let o_id = await AsyncStorage.getItem('id');
+    // let tok = await AsyncStorage.getItem('token');
+    // let id = props._id;
+    // console.log(o_id);
+    // console.log(id);
+    // console.log(tok);
 
-    await axios
-      .delete(`staff/${o_id}/${id}/delete`, {
-        headers: {
-          'x-auth-token': tok,
-        },
-      })
-      .then(res => {
-        console.log('staff deleted');
-        navigation.navigate('Staff')
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    // await axios
+    //   .delete(`staff/${o_id}/${id}/delete`, {
+    //     headers: {
+    //       'x-auth-token': tok,
+    //     },
+    //   })
+    //   .then(res => {
+    //     console.log('staff deleted');
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
   };
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate('StaffDetails', {id: props._id})}>
+      onPress={() => navigation.navigate('ProductDetails', {id: props._id})}>
       <View
         style={{
           flexDirection: 'row',
@@ -60,13 +59,16 @@ const StaffComponent = props => {
             width: 150,
             margin: 20,
           }}>
-             {props.staff_image?(<>
+              {props.buy_image?(<>
             <Image
-            source={{uri:`https://stormy-island-55490.herokuapp.com/${props.staff_image}`}}
-            style={{width: 140, resizeMode: 'contain', height: 140,borderRadius: 100,}}
+            source={{uri:`https://stormy-island-55490.herokuapp.com/${props.buy_image}`}}
+            style={{  width: 140,
+                resizeMode: 'contain',
+                height: 140,
+                borderRadius: 100,}}
           /></>):(<>
           <Image
-            source={require('../employee.jpg')}
+            source={require('../wheat.png')}
             style={{
               width: 140,
               resizeMode: 'contain',
@@ -74,7 +76,7 @@ const StaffComponent = props => {
               borderRadius: 100,
             }}
           /></>)}
-         
+        
         </View>
         <View>
           <Text
@@ -86,7 +88,7 @@ const StaffComponent = props => {
               marginTop: 35,
               fontWeight: 'bold',
             }}>
-            {props ? props.staff_name : null}
+            {props ? props.buy_name : null}
           </Text>
           <Text
             style={{
@@ -97,7 +99,7 @@ const StaffComponent = props => {
 
               fontWeight: 'bold',
             }}>
-            Employee
+           Product 
           </Text>
           <TouchableOpacity style={styles.loginBtn} onPress={handleDelete}>
             <Text style={{fontWeight: 'bold', color: '#FFFFFF'}}>REMOVE</Text>
@@ -135,4 +137,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default StaffComponent;
+export default ProductComponent;

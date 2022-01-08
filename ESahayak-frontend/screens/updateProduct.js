@@ -16,39 +16,33 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
-const SellerUpdate = ({navigation}) => {
+const ProductUpdate = ({navigation,route}) => {
     useEffect(() => {
         async function getResults() {
           let id=await AsyncStorage.getItem('id')
+          let pid = route.params.id;
           console.log(id);
-          const results = await axios.get(`/buyer/${id}`)
+          const results = await axios.get(`/buyer/${id}/${pid}`)
           // .then((res) => {
           //   console.log(res.data);
           // })
           // .catch((err) => {
           //   console.log(err);
           // });
-          setSellerName(results.data.seller_name)
-          setSellerEmail(results.data.seller_email)
-          setSellerPassword(results.data.seller_password)
-          setSellerPhone(results.data.seller_phone)
-          setShopAddress(results.data.shop_address)
-          setSellerImage(results.data.seller_image)
-          setSellerUpi(results.data.seller_upi)
+          setbuy_name(results.data.buy_name)
+          setbuy_price(results.data.buy_price)
+          setbuy_quantity(results.data.buy_quantity)
+          setbuy_image(results.data.buy_image)
+         
         }
         getResults();
         
        
       },[]);
-  const [seller_name, setSellerName] = useState('');
-  const [seller_email, setSellerEmail] = useState('');
-  const [seller_password, setSellerPassword] = useState('');
-  const [seller_phone, setSellerPhone] = useState('');
-  const [shop_address, setShopAddress] = useState('');
-  const [seller_image, setSellerImage] = useState('');
-  const [seller_upi, setSellerUpi] = useState('');
-
-  const [errmsg, seterrmsg] = useState('');
+      const [buy_name, setbuy_name] = useState("");
+      const [buy_price, setbuy_price] = useState("");
+      const [buy_quantity, setbuy_quantity] = useState("");
+      const [buy_image, setbuy_image] = useState("");
 
   // const handleChangeImage = (e) => {
   //   console.log(e.target.files[0]);
@@ -60,30 +54,29 @@ const SellerUpdate = ({navigation}) => {
     // console.log("Please Agree terms & conditons");
     // } else {
     const fd = new FormData();
-    fd.append('seller_image',{
-      name: seller_image.fileName,
-      type: seller_image.type,
+    fd.append('buy_image',{
+      name: buy_image.fileName,
+      type: buy_image.type,
       uri: 
       //Platform.OS === 'ios' ? photo.uri.replace('file://', '') :
-      seller_image.uri
+      buy_image.uri
    
       });
-    fd.append('seller_name', seller_name);
-    fd.append('seller_email', seller_email);
-    fd.append('seller_phone', seller_phone);
-    fd.append('seller_password', seller_password);
-    fd.append('shop_address', shop_address);
-    fd.append('seller_upi', seller_upi);
+    fd.append("buy_price", buy_price);
+    fd.append("buy_quantity", buy_quantity);
+    fd.append("buy_name", buy_name);
+  
 
-    console.log(seller_image);
-    console.log('data', fd);
+  console.log(buy_image);
+  console.log('data', fd);
     let id=await AsyncStorage.getItem('id')
     let token=await AsyncStorage.getItem("token")
+    let pid = route.params.id;
     await axios
-      .put(`/buyer/${id}/update`, fd,{
+      .put(`/buyer/${id}/${pid}/update`, fd,{
         headers: {
           Accept:'application/json',
-          'Content-type':'multipart/form-data',
+        'Content-type':'multipart/form-data',
             "x-auth-token":token,
           },
       })
@@ -92,7 +85,7 @@ const SellerUpdate = ({navigation}) => {
         console.log(res);
         //localStorage.setItem("token", res.headers["x-auth-token"]);
             //window.location.href = 'http://localhost:3000/seller/allpdts';
-            navigation.navigate('ProfileSeller');
+            navigation.navigate('Products');
       })
       .catch(err => {
         console.log(err);
@@ -104,8 +97,8 @@ const SellerUpdate = ({navigation}) => {
     launchImageLibrary({noData: true}, response => {
       console.log(response.assets[0].uri);
       if (response) {
-        setSellerImage(response.assets[0]);
-        console.log(seller_image);
+        setbuy_image(response.assets[0]);
+        console.log(buy_image);
       }
     });
   };
@@ -155,13 +148,13 @@ const SellerUpdate = ({navigation}) => {
               marginTop: 20,
               marginBottom: 20,
             }}>
-            UPDATE SELLER
+            UPDATE PRODUCT DETAILS
           </Text>
           <View>
-            {seller_image ? (
+            {buy_image ? (
               <View style={styles.boxSimple}>
                 <Image
-                  source={{uri:`https://stormy-island-55490.herokuapp.com/${seller_image}`}}
+                  source={{uri: `https://stormy-island-55490.herokuapp.com/${buy_image}`}}
                   style={{width: 100, height: 100}}
                 />
                 {/* <Button title="Upload Photo" onPress={handleUploadPhoto} /> */}
@@ -177,80 +170,41 @@ const SellerUpdate = ({navigation}) => {
           <View style={styles.inputView}>
             <TextInput
               style={styles.TextInput}
-              placeholder="ENTER YOUR FULL NAME"
+              placeholder="ENTER pdt NAME"
               placeholderTextColor="#003f5c"
               color="black"
-              name="seller_name"
-              value={seller_name}
-              onChangeText={name => setSellerName(name)}
+              name="pdt_name"
+              value={buy_name}
+              onChangeText={name => setbuy_name(name)}
+            />
+          </View>
+         
+          <View style={styles.inputView}>
+            <TextInput
+              style={styles.TextInput}
+              placeholder="ENTER PRICE"
+              placeholderTextColor="#003f5c"
+              color="black"
+              name="pdt_last_salary_paid"
+              value={buy_price}
+              onChangeText={salary => setbuy_price(salary)}
             />
           </View>
           <View style={styles.inputView}>
             <TextInput
               style={styles.TextInput}
-              placeholder="ENTER YOUR EMAIL"
+              placeholder="ENTER QUANTITY"
               placeholderTextColor="#003f5c"
               color="black"
-              name="seller_email"
-              value={seller_email}
-              onChangeText={email => setSellerEmail(email)}
-            />
-          </View>
-          <View style={styles.inputView}>
-            <TextInput
-              style={styles.TextInput}
-              placeholder="PHONE NUMBER"
-              placeholderTextColor="#003f5c"
-              color="black"
-              name="seller_phone"
-              value={seller_phone}
-              onChangeText={no => setSellerPhone(no)}
+              name="pdt_phone"
+              value={buy_quantity}
+              onChangeText={no => setbuy_quantity(no)}
             />
           </View>
 
-          {/* <View style={styles.inputView}>
-           <TextInput
-             style={styles.TextInput}
-             placeholder="CONFIRM PASSWORD"
-             placeholderTextColor="#003f5c"
-             secureTextEntry={true}
-             onChangeText={handleChange}
-           />
-         </View> */}
-          <View style={styles.inputView}>
-            <TextInput
-              style={styles.TextInput}
-              placeholder="SHOP ADDRESS"
-              placeholderTextColor="#003f5c"
-              color="black"
-              name="shop_address"
-              value={shop_address}
-              onChangeText={addr => setShopAddress(addr)}
-            />
-          </View>
-          <View style={styles.inputView}>
-            <TextInput
-              style={styles.TextInput}
-              placeholder="UPI"
-              name="seller_upi"
-              placeholderTextColor="#003f5c"
-              color="black"
-              value={seller_upi}
-              onChangeText={upi => setSellerUpi(upi)}
-            />
-          </View>
-          <View style={styles.inputView}>
-            <TextInput
-              style={styles.TextInput}
-              placeholder="PASSWORD"
-              placeholderTextColor="#003f5c"
-              color="black"
-              name="seller_password"
-              value={seller_password}
-              secureTextEntry={true}
-              onChangeText={pass => setSellerPassword(pass)}
-            />
-          </View>
+         
+          
+        
           <TouchableOpacity style={styles.loginBtn} onPress={handleSubmit}>
             <Text style={{fontWeight: 'bold', color: '#FFFFFF'}}>UPDATE</Text>
           </TouchableOpacity>
@@ -313,4 +267,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SellerUpdate;
+export default ProductUpdate;
