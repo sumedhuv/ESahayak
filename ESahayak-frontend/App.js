@@ -23,6 +23,7 @@ import OwnerRegister from './screens/owner_register';
 import Welcome from './screens/welcome';
 import Home from './screens/home';
 import Products from './screens/product';
+import OwnerProducts from './screens/ownerProduct';
 import ProfileOwner from './screens/profileOwner';
 import ProfileSeller from './screens/profileSeller';
 import SellerUpdate from './screens/updateSeller';
@@ -37,7 +38,9 @@ import Addstaff from './screens/addstaff';
 import AddSellerProduct from './screens/addSellerproduct';
 import StaffDetails from './screens/staffdetails';
 import ProductDetails from './screens/productdetails';
+import OwnerProductDetails from './screens/ownerProductDetails';
 import OwnerDetails from './screens/ownerDetails';
+import OwnerOrderMore from './screens/ownerOrderMore';
 const Stack = createNativeStackNavigator();
 
 const App = () => {
@@ -70,10 +73,11 @@ const App = () => {
         screenOptions={screenOptionStyle}>
         <Drawer.Screen name="ProfileOwner" component={ProfileOwner} />
         <Drawer.Screen name="Voice" component={Voice} />
-        <Drawer.Screen name="Products" component={Products} />
+        <Drawer.Screen name="OwnerProducts" component={OwnerProducts} />
         <Drawer.Screen name="Sales" component={Sales} />
         <Drawer.Screen name="Staff" component={Staff} />
         <Drawer.Screen name="Settings" component={Settings} />
+        <Drawer.Screen name="OwnerOrderMore" component={OwnerOrderMore} />
       </Drawer.Navigator>
     );
   };
@@ -159,6 +163,11 @@ const App = () => {
          <Stack.Screen
           name="ProductDetails"
           component={ProductDetails}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="OwnerProductDetails"
+          component={OwnerProductDetails}
           options={{headerShown: false}}
         />
         <Stack.Screen
