@@ -204,6 +204,7 @@ const OrderMoreComponent = props => {
           style={{
             color: 'black',
             marginLeft: 10,
+            width: 100,
 
             fontSize: 15,
             marginTop: 5,
