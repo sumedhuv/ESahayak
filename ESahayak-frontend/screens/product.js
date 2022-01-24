@@ -144,9 +144,9 @@
 // });
 
 // export default Product;
-import React,{useState,useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from '../axios';
-import jwtDecode from "jwt-decode";
+import jwtDecode from 'jwt-decode';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ProductComponent from './productComponent';
 import {
@@ -161,48 +161,42 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-
-
 const Product = ({navigation}) => {
-
   const [staff, setstaff] = useState([]);
-  let allStaff=[];
+  let allStaff = [];
   // const fetchdata=async()=>{
   //   let id=await AsyncStorage.getItem('id')
-  
-  //   let response= await 
+
+  //   let response= await
   //    console.log(response.data)
   //     // if(response.data){
   //     allStaff.push(response.data)
-   
+
   //   setstaff(allStaff)
-  
-  
+
   // }
   useEffect(() => {
     async function getResults() {
-      let id=await AsyncStorage.getItem('id')
-      console.log(id,staff);
-      const results = await axios.get(`/buyer/${id}/all`)
+      let id = await AsyncStorage.getItem('id');
+      console.log(id, staff);
+      const results = await axios.get(`/buyer/${id}/all`);
       // .then((res) => {
       //   console.log(res.data);
       // })
       // .catch((err) => {
       //   console.log(err);
       // });;
-      setstaff(results.data)
+      setstaff(results.data);
     }
     getResults();
-    
-   
-  },[]);
-  
+  }, [staff]);
+
   // console.log(allStaff);
-  
+
   // useEffect(() => {
   //   async function fetchdata(){
   //     let id=await AsyncStorage.getItem('id')
-  
+
   //     await axios
   //       .get(`/staff/${id}/allstaff`)
   //       .then((res) => {
@@ -214,30 +208,31 @@ const Product = ({navigation}) => {
   //   }
   //   fetchdata()
   // }, [staff]);
-console.log('staff',staff)
+  console.log('staff', staff);
   return (
     <View style={styles.background}>
-        <View style={{float:'left',alignItems: 'center'}}>
-        <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('AddSellerProduct')}>
-            <Text style={{fontWeight: 'bold', color: '#FFFFFF'}}>ADD</Text>
-          </TouchableOpacity>
+      <View style={{float: 'left', alignItems: 'center'}}>
+        <TouchableOpacity
+          style={styles.loginBtn}
+          onPress={() => navigation.navigate('AddSellerProduct')}>
+          <Text style={{fontWeight: 'bold', color: '#FFFFFF'}}>ADD</Text>
+        </TouchableOpacity>
+      </View>
+      {staff.length === 0 ? (
+        <Text>You Have No Product...</Text>
+      ) : (
+        staff.map(x => (
+          <View key={x._id}>
+            <ProductComponent
+              buy_name={x.buy_name}
+              buy_price={x.buy_price}
+              buy_quantity={x.buy_quantity}
+              buy_image={x.buy_image}
+              _id={x._id}
+            />
           </View>
-          {staff.length === 0 ? (
-            <Text>You Have No Product...</Text>
-          ) : (
-            staff.map((x) => (
-            <View key={x._id}>
-              <ProductComponent
-                   buy_name={x.buy_name}
-                   buy_price={x.buy_price}
-                   buy_quantity={x.buy_quantity}
-                   buy_image={x.buy_image}
-                   _id={x._id}
-                  />
-             </View> 
-            ))
-          )}
-     
+        ))
+      )}
     </View>
   );
 };
@@ -270,4 +265,3 @@ const styles = StyleSheet.create({
 });
 
 export default Product;
-

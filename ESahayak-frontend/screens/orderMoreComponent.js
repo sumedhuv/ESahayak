@@ -22,43 +22,46 @@ const OrderMoreComponent = props => {
   const [qty, setqty] = useState(0);
   const [price, setprice] = useState(0);
   const handleEdit = async () => {
-    if (qty > props.buy_quantity) return alert("Quantity unavailable");
+    //if (qty > props.buy_quantity) return alert("Quantity unavailable");
     console.log(props.buy_image);
     const fd_owner = new FormData();
-    fd_owner.append("pdt_name", props.buy_name);
-    fd_owner.append("pdt_remaining_stock", qty);
-    fd_owner.append("pdt_bought_price", props.buy_price);
-    fd_owner.append("pdt_current_price", price);
-    fd_owner.append("pdt_image", props.buy_image);
+    fd_owner.append('pdt_name', props.buy_name);
+    fd_owner.append('pdt_remaining_stock', qty);
+    fd_owner.append('pdt_bought_price', props.buy_price);
+    fd_owner.append('pdt_current_price', price);
+    fd_owner.append('pdt_image', props.buy_image);
 
     //update owner
     let oid = await AsyncStorage.getItem('id');
     await axios
       .post(`/product/${oid}/addpdt`, fd_owner, {
         headers: {
-          "x-auth-token": oid,
+          'x-auth-token': oid,
         },
       })
-      .then((res) => {
-        console.log("Owner Updated");
+      .then(res => {
+        console.log('Owner Updated');
       });
 
     let seller_id;
     //get seller email
-    await axios.post("/buyer/one", { seller_email: props.buy_email }).then((res) => {
-      console.log(res.data);
-      seller_id = res.data;
-    });
+    await axios
+      .post('/buyer/one', {seller_email: props.buy_email})
+      .then(res => {
+        console.log(res.data);
+        seller_id = res.data;
+      });
 
     // update seller
     const fd_seller = new FormData();
-    fd_seller.append("buy_quantity", props.buy_quantity - qty);
+    fd_seller.append('buy_quantity', props.buy_quantity - qty);
 
     console.log(fd_seller);
     await axios
       .put(`/buyer/${seller_id}/${props._id}/update`, fd_seller)
-      .then((res) => {
-        console.log("seller updated");
+      .then(res => {
+        console.log('seller updated');
+        navigation.navigate('OwnerProducts');
       });
 
     // //get owner email
@@ -83,12 +86,9 @@ const OrderMoreComponent = props => {
     // });
   };
 
-
-
-
-return (
-  <TouchableOpacity
-    onPress={() => navigation.navigate('ProductDetails', {id: props._id})}>
+  return (
+    // <TouchableOpacity
+    //   onPress={() => navigation.navigate('ProductDetails', {id: props._id})}>
     <View
       style={{
         flexDirection: 'row',
@@ -105,25 +105,35 @@ return (
           width: 150,
           margin: 20,
         }}>
-            {props.buy_image?(<>
-          <Image
-          source={{uri:`https://stormy-island-55490.herokuapp.com/${props.buy_image}`}}
-          style={{  width: 140,
-              resizeMode: 'contain',
-              height: 140,
-              borderRadius: 100,}}
-        /></>):(<>
-        <Image
-          source={require('../wheat.png')}
-          style={{
-            width: 140,
-            resizeMode: 'contain',
-            height: 140,
-            borderRadius: 100,
-          }}
-        /></>)}
+        {props.buy_image ? (
+          <>
+            <Image
+              source={{
+                uri: `https://stormy-island-55490.herokuapp.com/${props.buy_image}`,
+              }}
+              style={{
+                width: 140,
+                resizeMode: 'contain',
+                height: 140,
+                borderRadius: 100,
+              }}
+            />
+          </>
+        ) : (
+          <>
+            <Image
+              source={require('../wheat.png')}
+              style={{
+                width: 140,
+                resizeMode: 'contain',
+                height: 140,
+                borderRadius: 100,
+              }}
+            />
+          </>
+        )}
         <View style={{flexDirection: 'row'}}>
-      <View style={styles.inputView}>
+          <View style={styles.inputView}>
             <TextInput
               // style={styles.TextInput}
               placeholder="QUANTITY"
@@ -143,7 +153,7 @@ return (
               onChangeText={no => setprice(no)}
             />
           </View>
-          </View>
+        </View>
       </View>
       <View>
         {/* <Text
@@ -177,7 +187,7 @@ return (
             marginTop: 5,
             fontWeight: 'bold',
           }}>
-         Product Price: {props.buy_price}
+          Product Price: {props.buy_price}
         </Text>
         <Text
           style={{
@@ -188,7 +198,7 @@ return (
             marginTop: 5,
             fontWeight: 'bold',
           }}>
-         Quantity: {props.buy_quantity}
+          Quantity: {props.buy_quantity}
         </Text>
         <Text
           style={{
@@ -199,7 +209,7 @@ return (
             marginTop: 5,
             fontWeight: 'bold',
           }}>
-        Seller Email: {props.buy_email}
+          Seller Email: {props.buy_email}
         </Text>
         <Text
           style={{
@@ -210,7 +220,7 @@ return (
             marginTop: 5,
             fontWeight: 'bold',
           }}>
-        Seller Name: {props.buy_seller_name}
+          Seller Name: {props.buy_seller_name}
         </Text>
         <Text
           style={{
@@ -221,56 +231,53 @@ return (
             marginTop: 5,
             fontWeight: 'bold',
           }}>
-        Seller UPI: {props.buy_upi}
+          Seller UPI: {props.buy_upi}
         </Text>
         <TouchableOpacity style={styles.loginBtn} onPress={handleEdit}>
           <Text style={{fontWeight: 'bold', color: '#FFFFFF'}}>ORDER</Text>
         </TouchableOpacity>
       </View>
-      
     </View>
-    
-  </TouchableOpacity>
-);
+    // </TouchableOpacity>
+  );
 };
 
 const styles = StyleSheet.create({
-background: {
-  backgroundColor: '#EEF0FF',
-  height: '100%',
-},
-inputView: {
-  backgroundColor: '#FFFFFF',
-  borderRadius: 10,
-  width: '50%',
-  // height: 40,
-  // marginBottom: 20,
-  
-   marginLeft:10,     
-  alignItems: 'center',
-},
-cornerbg: {
-  width: 25,
-  height: 25,
-  marginLeft: 0,
-},
-centre: {
-  alignItems: 'center',
+  background: {
+    backgroundColor: '#EEF0FF',
+    height: '100%',
+  },
+  inputView: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    width: '50%',
+    // height: 40,
+    // marginBottom: 20,
 
-  marginTop: 50,
-},
-loginBtn: {
-  width: '70%',
-  borderRadius: 10,
-  height: 50,
-  alignItems: 'center',
-  justifyContent: 'center',
-  marginTop: 10,
-  marginLeft: 20,
-  marginBottom:10,
-  backgroundColor: 'black',
-},
+    marginLeft: 10,
+    alignItems: 'center',
+  },
+  cornerbg: {
+    width: 25,
+    height: 25,
+    marginLeft: 0,
+  },
+  centre: {
+    alignItems: 'center',
 
+    marginTop: 50,
+  },
+  loginBtn: {
+    width: '70%',
+    borderRadius: 10,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+    marginLeft: 20,
+    marginBottom: 10,
+    backgroundColor: 'black',
+  },
 });
 
 export default OrderMoreComponent;

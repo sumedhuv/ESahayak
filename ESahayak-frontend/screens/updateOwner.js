@@ -1,6 +1,6 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from '../axios';
-import jwtDecode from "jwt-decode";
+import jwtDecode from 'jwt-decode';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   SafeAreaView,
@@ -17,29 +17,27 @@ import {
 } from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
 const OwnerUpdate = ({navigation}) => {
-    useEffect(() => {
-        async function getResults() {
-          let id=await AsyncStorage.getItem('id')
-          console.log(id);
-          const results = await axios.get(`/${id}`)
-          // .then((res) => {
-          //   console.log(res.data);
-          // })
-          // .catch((err) => {
-          //   console.log(err);
-          // });
-          setownerName(results.data.owner_name)
-          setownerEmail(results.data.owner_email)
-          setownerPassword(results.data.owner_password)
-          setownerPhone(results.data.owner_phone)
-          setShopAddress(results.data.shop_address)
-          setownerImage(results.data.owner_image)
-          setownerUpi(results.data.owner_upi)
-        }
-        getResults();
-        
-       
-      },[]);
+  useEffect(() => {
+    async function getResults() {
+      let id = await AsyncStorage.getItem('id');
+      console.log(id);
+      const results = await axios.get(`/${id}`);
+      // .then((res) => {
+      //   console.log(res.data);
+      // })
+      // .catch((err) => {
+      //   console.log(err);
+      // });
+      setownerName(results.data.owner_name);
+      setownerEmail(results.data.owner_email);
+      setownerPassword(results.data.owner_password);
+      setownerPhone(results.data.owner_phone);
+      setShopAddress(results.data.shop_address);
+      setownerImage(results.data.owner_image);
+      setownerUpi(results.data.owner_upi);
+    }
+    getResults();
+  }, []);
   const [owner_name, setownerName] = useState('');
   const [owner_email, setownerEmail] = useState('');
   const [owner_password, setownerPassword] = useState('');
@@ -60,14 +58,13 @@ const OwnerUpdate = ({navigation}) => {
     // console.log("Please Agree terms & conditons");
     // } else {
     const fd = new FormData();
-    fd.append('owner_image',{
+    fd.append('owner_image', {
       name: owner_image.fileName,
       type: owner_image.type,
-      uri: 
-      //Platform.OS === 'ios' ? photo.uri.replace('file://', '') :
-      owner_image.uri
-   
-      });
+      uri:
+        //Platform.OS === 'ios' ? photo.uri.replace('file://', '') :
+        owner_image.uri,
+    });
     fd.append('owner_name', owner_name);
     fd.append('owner_email', owner_email);
     fd.append('owner_phone', owner_phone);
@@ -77,22 +74,22 @@ const OwnerUpdate = ({navigation}) => {
 
     console.log(owner_image);
     console.log('data', fd);
-    let id=await AsyncStorage.getItem('id')
-    let token=await AsyncStorage.getItem("token")
+    let id = await AsyncStorage.getItem('id');
+    let token = await AsyncStorage.getItem('token');
     await axios
-      .put(`/${id}/update`, fd,{
+      .put(`/${id}/update`, fd, {
         headers: {
-          Accept:'application/json',
-          'Content-type':'multipart/form-data',
-            "x-auth-token":token,
-          },
+          Accept: 'application/json',
+          'Content-type': 'multipart/form-data',
+          'x-auth-token': token,
+        },
       })
       .then(res => {
-        console.log('here')
+        console.log('here');
         console.log(res);
         //localStorage.setItem("token", res.headers["x-auth-token"]);
-            //window.location.href = 'http://localhost:3000/owner/allpdts';
-            navigation.navigate('OwnerDetails');
+        //window.location.href = 'http://localhost:3000/owner/allpdts';
+        navigation.navigate('OwnerDetails');
       })
       .catch(err => {
         console.log(err);
@@ -161,7 +158,9 @@ const OwnerUpdate = ({navigation}) => {
             {owner_image ? (
               <View style={styles.boxSimple}>
                 <Image
-                  source={{uri: `https://stormy-island-55490.herokuapp.com/${owner_image}`}}
+                  source={{
+                    uri: `https://stormy-island-55490.herokuapp.com/${owner_image}`,
+                  }}
                   style={{width: 100, height: 100}}
                 />
                 {/* <Button title="Upload Photo" onPress={handleUploadPhoto} /> */}
@@ -203,7 +202,7 @@ const OwnerUpdate = ({navigation}) => {
               placeholderTextColor="#003f5c"
               color="black"
               name="owner_phone"
-              value={owner_phone}
+              value={owner_phone.toString()}
               onChangeText={no => setownerPhone(no)}
             />
           </View>
@@ -254,7 +253,6 @@ const OwnerUpdate = ({navigation}) => {
           <TouchableOpacity style={styles.loginBtn} onPress={handleSubmit}>
             <Text style={{fontWeight: 'bold', color: '#FFFFFF'}}>UPDATE</Text>
           </TouchableOpacity>
-        
         </View>
       </View>
     </ScrollView>
@@ -303,7 +301,7 @@ const styles = StyleSheet.create({
   },
   boxSimple: {
     backgroundColor: '#fff',
-    borderRadius: 4,
+
     borderWidth: 0.5,
     borderColor: '#000',
     padding: 10,

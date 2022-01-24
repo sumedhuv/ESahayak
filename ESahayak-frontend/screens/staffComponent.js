@@ -34,8 +34,10 @@ const StaffComponent = props => {
         },
       })
       .then(res => {
+        console.log(res.data.staff);
+        props.setstaff(res.data.staff);
         console.log('staff deleted');
-        navigation.navigate('Staff')
+        navigation.navigate('Staff');
       })
       .catch(err => {
         console.log(err);
@@ -60,21 +62,33 @@ const StaffComponent = props => {
             width: 150,
             margin: 20,
           }}>
-             {props.staff_image?(<>
-            <Image
-            source={{uri:`https://stormy-island-55490.herokuapp.com/${props.staff_image}`}}
-            style={{width: 140, resizeMode: 'contain', height: 140,borderRadius: 100,}}
-          /></>):(<>
-          <Image
-            source={require('../employee.jpg')}
-            style={{
-              width: 140,
-              resizeMode: 'contain',
-              height: 140,
-              borderRadius: 100,
-            }}
-          /></>)}
-         
+          {props.staff_image ? (
+            <>
+              <Image
+                source={{
+                  uri: `https://stormy-island-55490.herokuapp.com/${props.staff_image}`,
+                }}
+                style={{
+                  width: 140,
+                  resizeMode: 'contain',
+                  height: 140,
+                  borderRadius: 100,
+                }}
+              />
+            </>
+          ) : (
+            <>
+              <Image
+                source={require('../employee.jpg')}
+                style={{
+                  width: 140,
+                  resizeMode: 'contain',
+                  height: 140,
+                  borderRadius: 100,
+                }}
+              />
+            </>
+          )}
         </View>
         <View>
           <Text

@@ -1,4 +1,3 @@
-
 import React, {useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {
@@ -41,6 +40,7 @@ import ProductDetails from './screens/productdetails';
 import OwnerProductDetails from './screens/ownerProductDetails';
 import OwnerDetails from './screens/ownerDetails';
 import OwnerOrderMore from './screens/ownerOrderMore';
+import logout from './screens/logout';
 const Stack = createNativeStackNavigator();
 
 const App = () => {
@@ -62,6 +62,7 @@ const App = () => {
         <Drawer.Screen name="Products" component={Products} />
         <Drawer.Screen name="Sales" component={Sales} />
         <Drawer.Screen name="Settings" component={Settings} />
+        <Drawer.Screen name="Logout" component={logout} />
       </Drawer.Navigator>
     );
   };
@@ -78,19 +79,19 @@ const App = () => {
         <Drawer.Screen name="Staff" component={Staff} />
         <Drawer.Screen name="Settings" component={Settings} />
         <Drawer.Screen name="OwnerOrderMore" component={OwnerOrderMore} />
+        <Drawer.Screen name="Logout" component={logout} />
       </Drawer.Navigator>
     );
   };
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Welcome">
-     
         <Stack.Screen
           name="Welcome"
           component={Welcome}
           options={{headerShown: false}}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="Home"
           component={Home}
           options={{headerShown: false}}
@@ -105,12 +106,12 @@ const App = () => {
           component={OwnerLogin}
           options={{headerShown: false}}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="SellerRegister"
           component={SellerRegister}
           options={{headerShown: false}}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="SellerUpdate"
           component={SellerUpdate}
           options={{headerShown: false}}
@@ -130,7 +131,7 @@ const App = () => {
           component={StaffUpdate}
           options={{headerShown: false}}
         />
-          <Stack.Screen
+        <Stack.Screen
           name="OwnerRegister"
           component={OwnerRegister}
           options={{headerShown: false}}
@@ -140,27 +141,27 @@ const App = () => {
           component={mainTabSeller}
           options={{headerShown: false}}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="mainTabOwner"
           component={mainTabOwner}
           options={{headerShown: false}}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="Addstaff"
           component={Addstaff}
           options={{headerShown: false}}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="AddSellerProduct"
           component={AddSellerProduct}
           options={{headerShown: false}}
         />
-          <Stack.Screen
+        <Stack.Screen
           name="StaffDetails"
           component={StaffDetails}
           options={{headerShown: false}}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="ProductDetails"
           component={ProductDetails}
           options={{headerShown: false}}

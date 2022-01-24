@@ -1,6 +1,6 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from '../axios';
-import jwtDecode from "jwt-decode";
+import jwtDecode from 'jwt-decode';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   SafeAreaView,
@@ -16,33 +16,30 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
-const ProductUpdate = ({navigation,route}) => {
-    useEffect(() => {
-        async function getResults() {
-          let id=await AsyncStorage.getItem('id')
-          let pid = route.params.id;
-          console.log(id);
-          const results = await axios.get(`/buyer/${id}/${pid}`)
-          // .then((res) => {
-          //   console.log(res.data);
-          // })
-          // .catch((err) => {
-          //   console.log(err);
-          // });
-          setbuy_name(results.data.buy_name)
-          setbuy_price(results.data.buy_price)
-          setbuy_quantity(results.data.buy_quantity)
-          setbuy_image(results.data.buy_image)
-         
-        }
-        getResults();
-        
-       
-      },[]);
-      const [buy_name, setbuy_name] = useState("");
-      const [buy_price, setbuy_price] = useState("");
-      const [buy_quantity, setbuy_quantity] = useState("");
-      const [buy_image, setbuy_image] = useState("");
+const ProductUpdate = ({navigation, route}) => {
+  useEffect(() => {
+    async function getResults() {
+      let id = await AsyncStorage.getItem('id');
+      let pid = route.params.id;
+      console.log(id);
+      const results = await axios.get(`/buyer/${id}/${pid}`);
+      // .then((res) => {
+      //   console.log(res.data);
+      // })
+      // .catch((err) => {
+      //   console.log(err);
+      // });
+      setbuy_name(results.data.buy_name);
+      setbuy_price(results.data.buy_price);
+      setbuy_quantity(results.data.buy_quantity);
+      setbuy_image(results.data.buy_image);
+    }
+    getResults();
+  }, []);
+  const [buy_name, setbuy_name] = useState('');
+  const [buy_price, setbuy_price] = useState('');
+  const [buy_quantity, setbuy_quantity] = useState('');
+  const [buy_image, setbuy_image] = useState('');
 
   // const handleChangeImage = (e) => {
   //   console.log(e.target.files[0]);
@@ -54,38 +51,36 @@ const ProductUpdate = ({navigation,route}) => {
     // console.log("Please Agree terms & conditons");
     // } else {
     const fd = new FormData();
-    fd.append('buy_image',{
+    fd.append('buy_image', {
       name: buy_image.fileName,
       type: buy_image.type,
-      uri: 
-      //Platform.OS === 'ios' ? photo.uri.replace('file://', '') :
-      buy_image.uri
-   
-      });
-    fd.append("buy_price", buy_price);
-    fd.append("buy_quantity", buy_quantity);
-    fd.append("buy_name", buy_name);
-  
+      uri:
+        //Platform.OS === 'ios' ? photo.uri.replace('file://', '') :
+        buy_image.uri,
+    });
+    fd.append('buy_price', buy_price);
+    fd.append('buy_quantity', buy_quantity);
+    fd.append('buy_name', buy_name);
 
-  console.log(buy_image);
-  console.log('data', fd);
-    let id=await AsyncStorage.getItem('id')
-    let token=await AsyncStorage.getItem("token")
+    console.log(buy_image);
+    console.log('data', fd);
+    let id = await AsyncStorage.getItem('id');
+    let token = await AsyncStorage.getItem('token');
     let pid = route.params.id;
     await axios
-      .put(`/buyer/${id}/${pid}/update`, fd,{
+      .put(`/buyer/${id}/${pid}/update`, fd, {
         headers: {
-          Accept:'application/json',
-        'Content-type':'multipart/form-data',
-            "x-auth-token":token,
-          },
+          Accept: 'application/json',
+          'Content-type': 'multipart/form-data',
+          'x-auth-token': token,
+        },
       })
       .then(res => {
-        console.log('here')
+        console.log('here');
         console.log(res);
         //localStorage.setItem("token", res.headers["x-auth-token"]);
-            //window.location.href = 'http://localhost:3000/seller/allpdts';
-            navigation.navigate('Products');
+        //window.location.href = 'http://localhost:3000/seller/allpdts';
+        navigation.navigate('Products');
       })
       .catch(err => {
         console.log(err);
@@ -154,7 +149,9 @@ const ProductUpdate = ({navigation,route}) => {
             {buy_image ? (
               <View style={styles.boxSimple}>
                 <Image
-                  source={{uri: `https://stormy-island-55490.herokuapp.com/${buy_image}`}}
+                  source={{
+                    uri: `https://stormy-island-55490.herokuapp.com/${buy_image}`,
+                  }}
                   style={{width: 100, height: 100}}
                 />
                 {/* <Button title="Upload Photo" onPress={handleUploadPhoto} /> */}
@@ -178,7 +175,7 @@ const ProductUpdate = ({navigation,route}) => {
               onChangeText={name => setbuy_name(name)}
             />
           </View>
-         
+
           <View style={styles.inputView}>
             <TextInput
               style={styles.TextInput}
@@ -186,7 +183,7 @@ const ProductUpdate = ({navigation,route}) => {
               placeholderTextColor="#003f5c"
               color="black"
               name="pdt_last_salary_paid"
-              value={buy_price}
+              value={buy_price.toString()}
               onChangeText={salary => setbuy_price(salary)}
             />
           </View>
@@ -202,13 +199,9 @@ const ProductUpdate = ({navigation,route}) => {
             />
           </View>
 
-         
-          
-        
           <TouchableOpacity style={styles.loginBtn} onPress={handleSubmit}>
             <Text style={{fontWeight: 'bold', color: '#FFFFFF'}}>UPDATE</Text>
           </TouchableOpacity>
-        
         </View>
       </View>
     </ScrollView>

@@ -1,6 +1,6 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from '../axios';
-import jwtDecode from "jwt-decode";
+import jwtDecode from 'jwt-decode';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   SafeAreaView,
@@ -16,36 +16,34 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
-const StaffUpdate = ({navigation,route}) => {
-    useEffect(() => {
-        async function getResults() {
-            let oid = await AsyncStorage.getItem('id');
-            let staffid = route.params.id;
-            console.log(oid);
-            const results = await axios.get(`/staff/${oid}/${staffid}`);
-          // .then((res) => {
-          //   console.log(res.data);
-          // })
-          // .catch((err) => {
-          //   console.log(err);
-          // });
-          setStaffName(results.data.staff_name)
-          setStaffPhone(results.data.staff_phone)
-          setStaffLastSalary(results.data.staff_last_salary_paid)
-          setStaffSalary(results.data.staff_salary)
-          setStaffImage(results.data.staff_image)
-          setStaffUpi(results.data.staff_upi)
-        }
-        getResults();
-        
-       
-      },[]);
-      const [staff_name, setStaffName] = useState('');
-      const [staff_phone, setStaffPhone] = useState('');
-      const [staff_last_salary_paid, setStaffLastSalary] = useState('');
-      const [staff_salary, setStaffSalary] = useState('');
-      const [staff_image, setStaffImage] = useState('');
-      const [staff_upi, setStaffUpi] = useState('');
+const StaffUpdate = ({navigation, route}) => {
+  useEffect(() => {
+    async function getResults() {
+      let oid = await AsyncStorage.getItem('id');
+      let staffid = route.params.id;
+      console.log(oid);
+      const results = await axios.get(`/staff/${oid}/${staffid}`);
+      // .then((res) => {
+      //   console.log(res.data);
+      // })
+      // .catch((err) => {
+      //   console.log(err);
+      // });
+      setStaffName(results.data.staff_name);
+      setStaffPhone(results.data.staff_phone);
+      setStaffLastSalary(results.data.staff_last_salary_paid);
+      setStaffSalary(results.data.staff_salary);
+      setStaffImage(results.data.staff_image);
+      setStaffUpi(results.data.staff_upi);
+    }
+    getResults();
+  }, []);
+  const [staff_name, setStaffName] = useState('');
+  const [staff_phone, setStaffPhone] = useState('');
+  const [staff_last_salary_paid, setStaffLastSalary] = useState('');
+  const [staff_salary, setStaffSalary] = useState('');
+  const [staff_image, setStaffImage] = useState('');
+  const [staff_upi, setStaffUpi] = useState('');
 
   const [errmsg, seterrmsg] = useState('');
 
@@ -59,38 +57,37 @@ const StaffUpdate = ({navigation,route}) => {
     // console.log("Please Agree terms & conditons");
     // } else {
     const fd = new FormData();
-    fd.append('staff_image',{
-        name: staff_image.fileName,
-        type: staff_image.type,
-        uri: 
+    fd.append('staff_image', {
+      name: staff_image.fileName,
+      type: staff_image.type,
+      uri:
         //Platform.OS === 'ios' ? photo.uri.replace('file://', '') :
-        staff_image.uri
-     
-        });
-      fd.append('staff_name', staff_name);
-      // fd.append('staff_email', staff_email);
-      fd.append('staff_phone', staff_phone);
-      fd.append('staff_salary', staff_salary);
-      fd.append('staff_last_salary_paid', staff_last_salary_paid);
-      fd.append('staff_upi', staff_upi);
-  
-      console.log(staff_image);
-      console.log('data', fd);
-    let id=await AsyncStorage.getItem('id')
-    let token=await AsyncStorage.getItem("token")
+        staff_image.uri,
+    });
+    fd.append('staff_name', staff_name);
+    // fd.append('staff_email', staff_email);
+    fd.append('staff_phone', staff_phone);
+    fd.append('staff_salary', staff_salary);
+    fd.append('staff_last_salary_paid', staff_last_salary_paid);
+    fd.append('staff_upi', staff_upi);
+
+    console.log(staff_image);
+    console.log('data', fd);
+    let id = await AsyncStorage.getItem('id');
+    let token = await AsyncStorage.getItem('token');
 
     await axios
-      .put(`/staff/${id}/${route.params.id}/update`, fd,{
+      .put(`/staff/${id}/${route.params.id}/update`, fd, {
         headers: {
-            "x-auth-token":token,
-          },
+          'x-auth-token': token,
+        },
       })
       .then(res => {
-        console.log('here')
+        console.log('here');
         console.log(res);
         //localStorage.setItem("token", res.headers["x-auth-token"]);
-            //window.location.href = 'http://localhost:3000/seller/allpdts';
-            navigation.navigate('ProfileSeller');
+        //window.location.href = 'http://localhost:3000/seller/allpdts';
+        navigation.navigate('ProfileSeller');
       })
       .catch(err => {
         console.log(err);
@@ -159,7 +156,9 @@ const StaffUpdate = ({navigation,route}) => {
             {staff_image ? (
               <View style={styles.boxSimple}>
                 <Image
-                  source={{uri:`https://stormy-island-55490.herokuapp.com/${staff_image}`}}
+                  source={{
+                    uri: `https://stormy-island-55490.herokuapp.com/${staff_image}`,
+                  }}
                   style={{width: 100, height: 100}}
                 />
                 {/* <Button title="Upload Photo" onPress={handleUploadPhoto} /> */}
@@ -190,7 +189,7 @@ const StaffUpdate = ({navigation,route}) => {
               placeholderTextColor="#003f5c"
               color="black"
               name="staff_salary"
-              value={staff_salary}
+              value={staff_salary.toString()}
               onChangeText={salary => setStaffSalary(salary)}
             />
           </View>
@@ -201,7 +200,7 @@ const StaffUpdate = ({navigation,route}) => {
               placeholderTextColor="#003f5c"
               color="black"
               name="staff_last_salary_paid"
-              value={staff_last_salary_paid}
+              value={staff_last_salary_paid.toString()}
               onChangeText={salary => setStaffLastSalary(salary)}
             />
           </View>
@@ -212,7 +211,7 @@ const StaffUpdate = ({navigation,route}) => {
               placeholderTextColor="#003f5c"
               color="black"
               name="staff_phone"
-              value={staff_phone}
+              value={staff_phone.toString()}
               onChangeText={no => setStaffPhone(no)}
             />
           </View>

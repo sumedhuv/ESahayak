@@ -1,6 +1,6 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from '../axios';
-import jwtDecode from "jwt-decode";
+import jwtDecode from 'jwt-decode';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   SafeAreaView,
@@ -17,29 +17,27 @@ import {
 } from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
 const SellerUpdate = ({navigation}) => {
-    useEffect(() => {
-        async function getResults() {
-          let id=await AsyncStorage.getItem('id')
-          console.log(id);
-          const results = await axios.get(`/buyer/${id}`)
-          // .then((res) => {
-          //   console.log(res.data);
-          // })
-          // .catch((err) => {
-          //   console.log(err);
-          // });
-          setSellerName(results.data.seller_name)
-          setSellerEmail(results.data.seller_email)
-          setSellerPassword(results.data.seller_password)
-          setSellerPhone(results.data.seller_phone)
-          setShopAddress(results.data.shop_address)
-          setSellerImage(results.data.seller_image)
-          setSellerUpi(results.data.seller_upi)
-        }
-        getResults();
-        
-       
-      },[]);
+  useEffect(() => {
+    async function getResults() {
+      let id = await AsyncStorage.getItem('id');
+      console.log(id);
+      const results = await axios.get(`/buyer/${id}`);
+      // .then((res) => {
+      //   console.log(res.data);
+      // })
+      // .catch((err) => {
+      //   console.log(err);
+      // });
+      setSellerName(results.data.seller_name);
+      setSellerEmail(results.data.seller_email);
+      setSellerPassword(results.data.seller_password);
+      setSellerPhone(results.data.seller_phone);
+      setShopAddress(results.data.shop_address);
+      setSellerImage(results.data.seller_image);
+      setSellerUpi(results.data.seller_upi);
+    }
+    getResults();
+  }, []);
   const [seller_name, setSellerName] = useState('');
   const [seller_email, setSellerEmail] = useState('');
   const [seller_password, setSellerPassword] = useState('');
@@ -60,14 +58,13 @@ const SellerUpdate = ({navigation}) => {
     // console.log("Please Agree terms & conditons");
     // } else {
     const fd = new FormData();
-    fd.append('seller_image',{
+    fd.append('seller_image', {
       name: seller_image.fileName,
       type: seller_image.type,
-      uri: 
-      //Platform.OS === 'ios' ? photo.uri.replace('file://', '') :
-      seller_image.uri
-   
-      });
+      uri:
+        //Platform.OS === 'ios' ? photo.uri.replace('file://', '') :
+        seller_image.uri,
+    });
     fd.append('seller_name', seller_name);
     fd.append('seller_email', seller_email);
     fd.append('seller_phone', seller_phone);
@@ -77,22 +74,22 @@ const SellerUpdate = ({navigation}) => {
 
     console.log(seller_image);
     console.log('data', fd);
-    let id=await AsyncStorage.getItem('id')
-    let token=await AsyncStorage.getItem("token")
+    let id = await AsyncStorage.getItem('id');
+    let token = await AsyncStorage.getItem('token');
     await axios
-      .put(`/buyer/${id}/update`, fd,{
+      .put(`/buyer/${id}/update`, fd, {
         headers: {
-          Accept:'application/json',
-          'Content-type':'multipart/form-data',
-            "x-auth-token":token,
-          },
+          Accept: 'application/json',
+          'Content-type': 'multipart/form-data',
+          'x-auth-token': token,
+        },
       })
       .then(res => {
-        console.log('here')
+        console.log('here');
         console.log(res);
         //localStorage.setItem("token", res.headers["x-auth-token"]);
-            //window.location.href = 'http://localhost:3000/seller/allpdts';
-            navigation.navigate('ProfileSeller');
+        //window.location.href = 'http://localhost:3000/seller/allpdts';
+        navigation.navigate('ProfileSeller');
       })
       .catch(err => {
         console.log(err);
@@ -161,7 +158,9 @@ const SellerUpdate = ({navigation}) => {
             {seller_image ? (
               <View style={styles.boxSimple}>
                 <Image
-                  source={{uri:`https://stormy-island-55490.herokuapp.com/${seller_image}`}}
+                  source={{
+                    uri: `https://stormy-island-55490.herokuapp.com/${seller_image}`,
+                  }}
                   style={{width: 100, height: 100}}
                 />
                 {/* <Button title="Upload Photo" onPress={handleUploadPhoto} /> */}
@@ -203,7 +202,7 @@ const SellerUpdate = ({navigation}) => {
               placeholderTextColor="#003f5c"
               color="black"
               name="seller_phone"
-              value={seller_phone}
+              value={seller_phone.toString()}
               onChangeText={no => setSellerPhone(no)}
             />
           </View>
@@ -254,7 +253,6 @@ const SellerUpdate = ({navigation}) => {
           <TouchableOpacity style={styles.loginBtn} onPress={handleSubmit}>
             <Text style={{fontWeight: 'bold', color: '#FFFFFF'}}>UPDATE</Text>
           </TouchableOpacity>
-        
         </View>
       </View>
     </ScrollView>

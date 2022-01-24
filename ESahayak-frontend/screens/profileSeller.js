@@ -35,81 +35,89 @@ const ProfileSeller = ({navigation}) => {
   }, []);
   console.log(user);
   return (
-    <View style={styles.background}>
-      <View style={styles.cornerbg}>
-        <Image
-          source={require('../corner.png')}
-          style={{height: 120, width: 150}}
-        />
-      </View>
-      <View style={styles.centre}>
-      <View style={{height: 250, width: 250, marginTop: 30}}>
-          {user.seller_image?(<>
-            <Image
-            source={{uri:`https://stormy-island-55490.herokuapp.com/${user.seller_image}`}}
-            style={{width: null, resizeMode: 'contain', height: 220}}
-          /></>):(<>
-           <Image
-             source={require('../profile.png')}
-            style={{width: null, resizeMode: 'contain', height: 220}}
-          /></>)}
-          
-         
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <View style={styles.background}>
+        <View style={styles.cornerbg}>
+          <Image
+            source={require('../corner.png')}
+            style={{height: 120, width: 150}}
+          />
         </View>
-        <Text
-          style={{
-            fontWeight: 'bold',
-            fontSize: 22,
-            color: 'black',
-            marginBottom: 20,
-          }}>
-          WELCOME {user.seller_name}!
-        </Text>
-        <Text
-          style={{
-            fontWeight: 'bold',
-            fontSize: 22,
-            color: 'black',
-            marginBottom: 20,
-          }}>
-          Email Id: {user.seller_email}
-        </Text>
-        <Text
-          style={{
-            fontWeight: 'bold',
-            fontSize: 22,
-            color: 'black',
-            marginBottom: 20,
-          }}>
-          Phone Number: {user.seller_phone}
-        </Text>
-        <Text
-          style={{
-            fontWeight: 'bold',
-            fontSize: 22,
-            color: 'black',
-            marginBottom: 20,
-          }}>
-          Shop Address: {user.shop_address}
-        </Text>
-        <Text
-          style={{
-            fontWeight: 'bold',
-            fontSize: 22,
-            color: 'black',
-            marginBottom: 20,
-          }}>
-          UPI ID: {user.seller_upi}
-        </Text>
-        <TouchableOpacity
-          style={styles.loginBtn}
-          onPress={() => navigation.navigate('SellerUpdate')}>
-          <Text style={{fontWeight: 'bold', color: '#FFFFFF', fontSize: 18}}>
-            UPDATE
+        <View style={styles.centre}>
+          <View style={{height: 250, width: 250, marginTop: 30}}>
+            {user.seller_image ? (
+              <>
+                <Image
+                  source={{
+                    uri: `https://stormy-island-55490.herokuapp.com/${user.seller_image}`,
+                  }}
+                  style={{width: null, resizeMode: 'contain', height: 220}}
+                />
+              </>
+            ) : (
+              <>
+                <Image
+                  source={require('../profile.png')}
+                  style={{width: null, resizeMode: 'contain', height: 220}}
+                />
+              </>
+            )}
+          </View>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: 22,
+              color: 'black',
+              marginBottom: 20,
+            }}>
+            WELCOME {user.seller_name}!
           </Text>
-        </TouchableOpacity>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: 22,
+              color: 'black',
+              marginBottom: 20,
+            }}>
+            Email Id: {user.seller_email}
+          </Text>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: 22,
+              color: 'black',
+              marginBottom: 20,
+            }}>
+            Phone Number: {user.seller_phone}
+          </Text>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: 22,
+              color: 'black',
+              marginBottom: 20,
+            }}>
+            Shop Address: {user.shop_address}
+          </Text>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: 22,
+              color: 'black',
+              marginBottom: 20,
+            }}>
+            UPI ID: {user.seller_upi}
+          </Text>
+          <TouchableOpacity
+            style={styles.loginBtn}
+            onPress={() => navigation.navigate('SellerUpdate')}>
+            <Text style={{fontWeight: 'bold', color: '#FFFFFF', fontSize: 18}}>
+              UPDATE
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
